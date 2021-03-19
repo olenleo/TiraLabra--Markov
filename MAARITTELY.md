@@ -15,7 +15,7 @@ Käyttäjä voi valita haluaako hän pelkkiä sointuja, melodian vai molempia.
 
 
 # Aikavaativuksista ja algoritmeista
-**Kysymys** Telegram-keskustelussa puhuttiin trie-tietorakenteesta markov-ketjujen käsittelyssä. Tämä vaikuttaa lupaavalta, mutta en ole vielä keksinit miten trie-rakennetta sovellettaisiin markov-ketjuista haussa. Nähdäkseni yleinen käytäntö on kaksiulotteisesta matriisista etsiminen. Päivitän siis tätä osuutta tutkittuani asiaa tarkemmin.
+**Kysymys** Telegram-keskustelussa puhuttiin trie-tietorakenteesta markov-ketjujen käsittelyssä. Tämä vaikuttaa lupaavalta, mutta en ole vielä keksinit miten trie-rakennetta sovellettaisiin markov-ketjuista haussa. Nähdäkseni yleinen käytäntö on kaksiulotteisesta matriisista etsiminen. Päivitän siis tätä osuutta tutkittuani asiaa tarkemmin, ja luultavasti osallistuttuani ohjaukseen.
 
 Markov-matriisin luonti on aikavaativuudeltaan O(n) – koko merkkijono on luettava kertaalleen läpi.
 
@@ -32,7 +32,7 @@ Ohjelma on koulutettavissa lukemalla .midi-tiedostoja jFugue-kirjaston metodilla
 
 *Kolmas aste* 
 
-Ohjelma lukee 2 edellistä nuottia ja valitsee niiden pohjalta seuraavan.Tässä tulee jo haasteita algoritmin toiminnan hahmottamisen suhteen – taulukko lienee kuitenkin järkevin ratkaisu, sillä tarvitsemme nopeat haku- ja talletusominaisuudet, eikä opeteltu materiaali tule kasvamaan jolloin taulukon maksimikoko pysyy staattisena. 
+Ohjelma lukee 2 edellistä nuottia ja valitsee niiden pohjalta seuraavan.Tässä tulee jo haasteita algoritmin toiminnan hahmottamisen suhteen – taulukko lienee kuitenkin järkevin ratkaisu, sillä tarvitsemme nopeat haku- ja talletusominaisuudet, eikä opeteltu materiaali tule kasvamaan jolloin taulukon maksimikoko pysyy staattisena. Trie-rakenteen hyödyt ilmenevät oletettavasti tässä.
 
 *Neljäs aste* 
 
