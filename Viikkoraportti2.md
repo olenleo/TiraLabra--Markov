@@ -11,7 +11,7 @@ Pääosin käyttämäni aika on ollut ohjelman yleisen rakenteen suunnittelua ja
 
 # Miten ohjelma on edistynyt?
 
-Turhan vähän edellä mainitun tentin takia. Olen tehnyt trie-tietorakenteen [tämän kirjoituksen](https://dev.to/mlarocca/tries-3ddb) ja siihen liittyvää esimerkkirepositoriota hyödyntäen. Lopullisessa palautuksessa tulen kirjoittamaan tietorakenteen uusiksi ilman muistiinpanoja. Jos löytyy vinkkiä hyvään pseudokoodikuvaukseen algoritmista otan sen kiitollisena vastaan!
+Turhan vähän edellä mainitun tentin takia. Olen tehnyt trie-tietorakenteen [tämän kirjoituksen](https://dev.to/mlarocca/tries-3ddb) ja siihen liittyvää [esimerkkirepositoriota](https://github.com/mlarocca/AlgorithmsAndDataStructuresInAction/blob/master/Java/src/org/mlarocca/containers/strings/trie/Trie.java) hyödyntäen. Lopullisessa palautuksessa tulen kirjoittamaan tietorakenteen uusiksi ilman muistiinpanoja. Jos löytyy vinkkiä hyvään pseudokoodikuvaukseen algoritmista otan sen kiitollisena vastaan!
 
 Automaattinen testaus jäi ikävä kyllä suorittamatta mutta olen tehnyt manuaalista testausta. Nähdäkseni trieen lisääminen ja haku toimivat yksinkertaisilla syötteillä.
 
