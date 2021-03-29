@@ -18,6 +18,12 @@
             <artifactId>jfugue</artifactId>
             <version>5.0.9</version>
         </dependency>
-
+        
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+        <version>4.4</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 </project>

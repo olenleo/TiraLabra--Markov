@@ -1,62 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package noteReader;
 
+import com.opencsv.CSVReader;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
-import javax.sound.midi.InvalidMidiDataException;
-
-import org.jfugue.midi.MidiFileManager;
-import org.jfugue.midi.MidiParserListener;
-import org.jfugue.parser.ParserListenerAdapter;
-import org.jfugue.pattern.Pattern;
-import org.jfugue.player.Player;
-import org.jfugue.theory.Note;
+import java.util.Arrays;
+import javaMusic.sovelluslogiikka.Note;
 
 /**
+ * Luokka lukee esiformatoidun .csv-tiedoston ja muuttaa sen käyttökelpoiseksi
+ * informaatioksi.
  *
- * @author Leo Niemi
+ *  * @author Leo Niemi
  */
-public class NoteReader extends ParserListenerAdapter {
+public class NoteReader {
 
-    private List<Note> notes;
+    public NoteReader() throws URISyntaxException, FileNotFoundException, IOException {
 
-    public NoteReader() throws IOException, InvalidMidiDataException {
-        Player player = new Player();
-        notes = new ArrayList<>();
-        URL midURL = getClass().getResource("/ABC.mid");
-        String fileName = midURL.toString().substring(6);
-        Pattern pattern = MidiFileManager.loadPatternFromMidi(new File(fileName));
+        URL res = getClass().getClassLoader().getResource("test.csv");
+        File file = Paths.get(res.toURI()).toFile();
 
-        try {
-            pattern = MidiFileManager
-                    .loadPatternFromMidi(new File(fileName));
-        } catch (IOException ex) {
-        } catch (InvalidMidiDataException ex) {
-        }
-        System.out.println("\nPattern: " + pattern
-                + "\nT100: Tempo 100 BPM"
-                + "\nV0: MIDI channel 1"
-                + "\nC6qa71: C6 quarter-note at 71 velocity"
-                + "\nD6a80: D6 quarter-note at 80 velocity"
-                + "\nE6ha90: D6 half-note at 90 velocity"
-                + "\nF6ha101: F6 half-note at 101 velocity");
-
-        player.play(pattern);
-    }
-
-
-    public void noteEvent(Note note) {
-        if (!notes.contains(note)) {
-            notes.add(note);
+        String absolutePath = file.getAbsolutePath();
+        System.out.println(absolutePath);
+        FileReader f = new FileReader(file);
+        BufferedReader bufferedreader = new BufferedReader(f);
+        CSVReader r = new CSVReader(bufferedreader);
+        String[] record;
+        ArrayList<Note> notes = new ArrayList<>();
+        while ((record = r.readNext()) != null) {
+            
+            // TODO tallennetaan nuotit pinoon? 
+            if (record[2].contains("Note_")) {
+                System.out.println(Arrays.toString(record));
+            }
         }
     }
-
-    
 }
