@@ -13,21 +13,19 @@ public class main {
 
     public static void main(String[] args) throws IOException, InvalidMidiDataException {
         try {
-            //        Trie trie = new Trie();
-            
-            
-//
-//        trie.add("Rapu");
-//        trie.add("Rapina");
-//        trie.add("Rapistuu");
-//        trie.add("Rapistuva");
-//        
-//        System.out.println(trie.search("Rapu"));
-//        System.out.println(trie.search("Rapistuu"));
-//        System.out.println(trie.search("Rapiseva"));
+            Trie trie = new Trie();
+
+            trie.add("Rapu");
+            trie.add("Rapina");
+            trie.add("Rapistuu");
+            trie.add("Rapistuva");
+
+            System.out.println(trie.search("Rapu"));
+            System.out.println(trie.search("Rapistuu"));
+            System.out.println(trie.search("Rapiseva"));
 //
 //        
-//        Markovketju m = new Markovketju();
+            Markovketju m = new Markovketju();
 //        ArrayList<String> chordprogression = new ArrayList<>();
 //        String curr = "C";
 //        for (int i = 0; i < 30; i++) {
@@ -37,11 +35,11 @@ public class main {
 //        }
 //        System.out.println(chordprogression);
 //        System.out.println(m.getPiChords());
-        NoteReader notereader = new NoteReader();
+            NoteReader notereader = new NoteReader();
         } catch (URISyntaxException ex) {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
 }

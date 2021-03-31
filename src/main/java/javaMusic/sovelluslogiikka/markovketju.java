@@ -126,7 +126,7 @@ public class Markovketju {
     }
     /**
      * Palauttaa generoidyt soinnut Sonic PI:n hyväksymässä formaatissa.
-     * @return 
+     * @return formatoitu ArrayList
      */
     public ArrayList<String> getPiChords() {
         return this.piChords;
