@@ -1,23 +1,24 @@
 package javaMusic.sovelluslogiikka;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
- * Luokka toteuttaa trie-puun lisäys- ja hakutoiminnot.
- * Hyvin alustava toteutus, lue: 
+ * Luokka toteuttaa trie-puun lisäys- ja hakutoiminnot. Hyvin alustava toteutus,
+ * lue:
  * https://github.com/olenleo/TiraLabra--Markov/blob/main/Viikkoraportti2.md
- * Tulen jatkossa siis kirjoittamaan tämän luokan puhtaaksi ilman muistiinpanoja. 
- * 
+ * Tulen jatkossa siis kirjoittamaan tämän luokan puhtaaksi ilman
+ * muistiinpanoja.
+ *
  * @author Leo Niemi
  */
 public class Trie {
-    Map<Character, Trie> children;
-    boolean storesKey;
-    
 
-    public Trie(String key) {
+    Map<Note, Trie> children;
+    boolean storesKey;
+
+    public Trie(Note[] key) {
         this(key, 0);
     }
 
@@ -26,31 +27,33 @@ public class Trie {
         storesKey = false;
     }
 
-    private Trie(String key, int charIndex) {
+    private Trie(Note[] key, int charIndex) {
         children = new HashMap<>();
-        if (charIndex >= key.length()) {
+        if (charIndex >= key.length) {
             storesKey = true;
         } else {
             storesKey = false;
-            Character character = key.charAt(charIndex);
+            Note character = key[charIndex];
             children.put(character, new Trie(key, charIndex + 1));
+
+            System.out.println(character);
         }
     }
 
-    public Trie add(String key) {
+    public Trie add(Note[] key) {
         return this.add(key, 0);
     }
 
-    public Trie add(String key, int charIndex) {
-        if (charIndex < key.length()) {
-            Character character = key.charAt(charIndex);
+    public Trie add(Note[] key, int charIndex) {
+        if (charIndex < key.length) {
+            Note character = key[charIndex];
             if (children.containsKey(character)) {
                 return children.get(character).add(key, charIndex + 1);
             } else {
                 children.put(character, new Trie(key, charIndex + 1));
                 return this;
             }
-        } else if (charIndex == key.length()) {
+        } else if (charIndex == key.length) {
             if (this.storesKey) {
                 return null;
             } else {
@@ -62,21 +65,40 @@ public class Trie {
         }
     }
 
-    public Trie search(String key) {
-        if (key.isEmpty()) {
+    public Trie search(Note[] key) {
+        if (key.length == 0) {
             return storesKey ? this : null;
         } else {
-            Character character = key.charAt(0);
+            Note character = key[0];
+            System.out.println("Etsitään " + character);
             if (children.containsKey(character)) {
-                return children.get(character).search(key.substring(1));
+                System.out.println("On childreneitä");
+                return children.get(character).search(Arrays.copyOfRange(key, 1, key.length));
             } else {
                 return null;
             }
+
         }
     }
+
+    public Map<Note, Trie> getChildren() {
+        return this.children;
+    }
+
+    public static boolean keyIsEmpty(Note[] key) {
+
+        for (Note key1 : key) {
+            if (key1.getNote() != 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return "Contains key: " + this.storesKey;
-        
+
     }
+
 }

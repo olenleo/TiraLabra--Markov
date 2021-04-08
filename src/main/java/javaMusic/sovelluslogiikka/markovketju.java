@@ -71,12 +71,12 @@ public class Markovketju {
         todennakoisyysmatriisi[5][4] = todennakoisyysmatriisi[5][3] + 0.05; // G/B
         todennakoisyysmatriisi[5][5] = todennakoisyysmatriisi[5][4] + 0.35; // G/B
        
-        for (int i = 0; i< todennakoisyysmatriisi.length; i++) {
-            for (int j = 0; j< todennakoisyysmatriisi.length; j++) {
-                System.out.print("[" +todennakoisyysmatriisi[i][j]+"]");
-            }
-            System.out.println("");
-        }
+//        for (int i = 0; i< todennakoisyysmatriisi.length; i++) {
+//            for (int j = 0; j< todennakoisyysmatriisi.length; j++) {
+//                System.out.print("[" +todennakoisyysmatriisi[i][j]+"]");
+//            }
+//            System.out.println("");
+//        }
     }
 
     /**

@@ -6,40 +6,24 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javaMusic.sovelluslogiikka.Trie;
 import javaMusic.sovelluslogiikka.Markovketju;
+import javaMusic.sovelluslogiikka.Note;
 import javax.sound.midi.InvalidMidiDataException;
 import noteReader.NoteReader;
 
 public class main {
 
     public static void main(String[] args) throws IOException, InvalidMidiDataException {
+        Trie trie = new Trie();
+        Markovketju m = new Markovketju();
+
         try {
-            Trie trie = new Trie();
-
-            trie.add("Rapu");
-            trie.add("Rapina");
-            trie.add("Rapistuu");
-            trie.add("Rapistuva");
-
-            System.out.println(trie.search("Rapu"));
-            System.out.println(trie.search("Rapistuu"));
-            System.out.println(trie.search("Rapiseva"));
-//
-//        
-            Markovketju m = new Markovketju();
-//        ArrayList<String> chordprogression = new ArrayList<>();
-//        String curr = "C";
-//        for (int i = 0; i < 30; i++) {
-//            curr = m.getChord(curr);
-//            chordprogression.add(curr);
-//            
-//        }
-//        System.out.println(chordprogression);
-//        System.out.println(m.getPiChords());
-            NoteReader notereader = new NoteReader();
+            NoteReader notereader = new NoteReader("Tira_Major_120BPM", trie);
         } catch (URISyntaxException ex) {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        Note[] list = {new Note(26,480,960), new Note(28,960,1440), new Note(29,1440,1920), new Note(31,1920,2400), new Note(33,2400,2880)};
+//        trie.add(list);
+        System.out.println(trie.search(list));
     }
 
 }
