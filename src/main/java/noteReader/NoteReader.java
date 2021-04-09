@@ -6,13 +6,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Arrays;
 import javaMusic.sovelluslogiikka.Note;
 import javaMusic.sovelluslogiikka.Trie;
@@ -26,10 +23,20 @@ import javaMusic.sovelluslogiikka.Trie;
 public class NoteReader {
 
     private int[] notes = new int[127];
+    private boolean[] notesInUse = new boolean[127];
     ArrayDeque<Note> pino;
     private int nuottisarjanPituus = 5; // trieen tallennettavien sarjojen pituus
     private Trie trie;
-
+    
+    /**
+     * TODO: Eriytä lue csv-toiminnallisuus omaan metodiin. 
+     * 
+     * @param filename MidiCSV-ohjelman tuottaman .csv-tiedoston nimi ilman tiedostopäätettä
+     * @param trie trie-tietorakenne
+     * @throws URISyntaxException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public NoteReader(String filename, Trie trie) throws URISyntaxException, FileNotFoundException, IOException {
         this.pino = new ArrayDeque<>();
         this.trie = trie;
@@ -46,39 +53,37 @@ public class NoteReader {
         while ((record = r.readNext()) != null) {
             int track = Integer.valueOf(record[0]);
             if (record[2].contains("Note_")) {
-
-                int timestamp = Integer.parseInt(record[1].trim()); // + 1 koska notes[0] ilmaisee että nuotti ei ole käytössä
+                int timestamp = Integer.parseInt(record[1].trim());
                 String command = record[2];
                 int note = Integer.valueOf(record[4].trim());
-//                System.out.println(Arrays.toString(record));
-                if (notes[note] == 0) {
+                if (!notesInUse[note]) {
                     notes[note] = timestamp;
+                    notesInUse[note] = true;
                 } else {
                     Note lisattava = new Note(note, notes[note], timestamp);
                     lisaaNuottiPinoon(lisattava);
-                    notes[note] = 0;
+                    notesInUse[note] = false;
                 }
             }
         }
-
     }
-
+/**
+ * Metodi pilkkoo nuottien sarjan trieen tallennettavan sanan mittaisiksi osiksi.
+ * 
+ * @param note Note-olio.
+ */
     private void lisaaNuottiPinoon(Note note) {
-        // jos pino on pienempi kuin sanan pituus
+        // pino on pienempi kuin sanan pituus
         if (pino.size() < nuottisarjanPituus) {
             pino.add(note);
         } else {
-            // sana valmis, lisää trieen.
-//            System.out.println(Arrays.toString(pino.toArray()));
-            
+        //  sana valmis, lisää trieen.
             Note[] array = pino.toArray(new Note[pino.size()]);
             System.out.println(Arrays.toString(array));
             trie.add(array);
             pino.removeFirst();
             pino.add(note);
         }
-
-//        System.out.print(note.getNote() + " ");
     }
 
 }

@@ -1,7 +1,6 @@
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javaMusic.sovelluslogiikka.Trie;
@@ -17,12 +16,12 @@ public class main {
         Markovketju m = new Markovketju();
 
         try {
-            NoteReader notereader = new NoteReader("Tira_Major_120BPM", trie);
+            NoteReader notereader = new NoteReader("fbts", trie);
         } catch (URISyntaxException ex) {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Note[] list = {new Note(26,480,960), new Note(28,960,1440), new Note(29,1440,1920), new Note(31,1920,2400), new Note(33,2400,2880)};
-//        trie.add(list);
+        Note[] list = {new Note(65,235440,235680), new Note(65,235920,236160), new Note(65,236160,236640), new Note(65,236640,237120), new Note(65,237120,237600)};
+        
         System.out.println(trie.search(list));
     }
 

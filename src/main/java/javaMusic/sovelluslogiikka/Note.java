@@ -18,10 +18,8 @@ public class Note {
      * Konstruktori sisältää nuotin midi-arvon ja alku- sekä päätepisteet.
      *
      * @param note Kokonaisluku 0-127
-     * @param start Alkupistettä vähennetään yhdellä notereaderin tietorakenteen
-     * käsittelyn helpottamiseksi
-     * @param end Päätepistettä vähennetään yhdellä notereaderin tietorakenteen
-     * käsittelyn helpottamiseksi
+     * @param start midi-formaatin antama alkukohta
+     * @param end midi-formaatin antama loppukohta
      */
     public Note(int note, int start, int end) {
         this.note = note;
@@ -68,12 +66,6 @@ public class Note {
             return false;
         }
         if (this.start != other.start) {
-            return false;
-        }
-        if (this.end != other.end) {
-            return false;
-        }
-        if (this.duration != other.duration) {
             return false;
         }
         return true;

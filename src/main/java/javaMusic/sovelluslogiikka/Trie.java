@@ -18,8 +18,8 @@ public class Trie {
     Map<Note, Trie> children;
     boolean storesKey;
 
-    public Trie(Note[] key) {
-        this(key, 0);
+    public Trie(Note[] noteArray) {
+        this(noteArray, 0);
     }
 
     public Trie() {
@@ -27,33 +27,31 @@ public class Trie {
         storesKey = false;
     }
 
-    private Trie(Note[] key, int charIndex) {
+    private Trie(Note[] noteArray, int noteIndex) {
         children = new HashMap<>();
-        if (charIndex >= key.length) {
+        if (noteIndex >= noteArray.length) {
             storesKey = true;
         } else {
             storesKey = false;
-            Note character = key[charIndex];
-            children.put(character, new Trie(key, charIndex + 1));
-
-            System.out.println(character);
+            Note note = noteArray[noteIndex];
+            children.put(note, new Trie(noteArray, noteIndex + 1));
         }
     }
 
-    public Trie add(Note[] key) {
-        return this.add(key, 0);
+    public Trie add(Note[] noteArray) {
+        return this.add(noteArray, 0);
     }
 
-    public Trie add(Note[] key, int charIndex) {
-        if (charIndex < key.length) {
-            Note character = key[charIndex];
-            if (children.containsKey(character)) {
-                return children.get(character).add(key, charIndex + 1);
+    public Trie add(Note[] noteArray, int noteIndex) {
+        if (noteIndex < noteArray.length) {
+            Note note = noteArray[noteIndex];
+            if (children.containsKey(note)) {
+                return children.get(note).add(noteArray, noteIndex + 1);
             } else {
-                children.put(character, new Trie(key, charIndex + 1));
+                children.put(note, new Trie(noteArray, noteIndex + 1));
                 return this;
             }
-        } else if (charIndex == key.length) {
+        } else if (noteIndex == noteArray.length) {
             if (this.storesKey) {
                 return null;
             } else {
@@ -61,23 +59,22 @@ public class Trie {
                 return this;
             }
         } else {
-            throw new IllegalArgumentException("Ongelma indeksin kanssa: " + charIndex + ", " + key);
+            throw new IllegalArgumentException("Ongelma indeksin kanssa: " + noteIndex + ", " + noteArray);
         }
     }
 
-    public Trie search(Note[] key) {
-        if (key.length == 0) {
+    public Trie search(Note[] noteArray) {
+        if (noteArray.length == 0) {
             return storesKey ? this : null;
         } else {
-            Note character = key[0];
-            System.out.println("Etsitään " + character);
-            if (children.containsKey(character)) {
-                System.out.println("On childreneitä");
-                return children.get(character).search(Arrays.copyOfRange(key, 1, key.length));
+            Note note = noteArray[0];
+            System.out.println("Etsitään " + note);
+            if (children.containsKey(note)) {
+                return children.get(note).search(Arrays.copyOfRange(noteArray, 1, noteArray.length));
             } else {
+                
                 return null;
             }
-
         }
     }
 
@@ -85,19 +82,9 @@ public class Trie {
         return this.children;
     }
 
-    public static boolean keyIsEmpty(Note[] key) {
-
-        for (Note key1 : key) {
-            if (key1.getNote() != 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public String toString() {
-        return "Contains key: " + this.storesKey;
+        return "Contains note: " + this.storesKey;
 
     }
 
