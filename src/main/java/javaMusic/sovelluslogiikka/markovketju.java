@@ -87,7 +87,6 @@ public class Markovketju {
      * @return jokin merkkijonoista ["G", "F", "Am, "Dm", "G/B", "C"]
      */
     public String getChord(String curr) {
-        
         switch (curr) {
             case "G":
                 return getChordFromIndex(0);                

@@ -1,6 +1,6 @@
 /*
  */
-package javaMusic.sovelluslogiikka;
+package deprecated;
 
 /**
  * Placeholder; Jatkossa tämä luokka hallinnoi nuotti-olion muuttujia.
@@ -35,18 +35,16 @@ public class Note {
     @Override
     public String toString() {
 //        int mod = this.note % 12;
-//        String[] nuottinimet = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", "B#"};
+//        String[] nuottinimet = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 //        return nuottinimet[mod];
-        return "new Note(" + this.note + "," + this.start + "," + this.end + ")";
+        return "new Note(" + this.note + "," + this.duration + ")";
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + this.note;
-        hash = 71 * hash + this.start;
-        hash = 71 * hash + this.end;
-        hash = 71 * hash + this.duration;
+        hash = 17 * hash + this.note;
+        hash = 17 * hash + this.duration;
         return hash;
     }
 
@@ -65,11 +63,15 @@ public class Note {
         if (this.note != other.note) {
             return false;
         }
-        if (this.start != other.start) {
+        if (this.duration != other.duration) {
             return false;
         }
         return true;
     }
+
+    
+    
+    
     
     
 }
