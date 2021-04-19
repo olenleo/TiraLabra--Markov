@@ -9,6 +9,8 @@ import java.util.Random;
  *
  * @author Leo Niemi
  */
+
+
 public class Markovketju {
 
     private double[][] todennakoisyysmatriisi;

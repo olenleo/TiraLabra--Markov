@@ -10,6 +10,7 @@ public class TrieNode {
     private boolean end = false;
     private int depth;
     private int freq;
+    
     /**
      * Jokainen TrieNode sisältää viitteen lapsiinsa.
      * @param depth Solmun syvyys tietorakenteessa
@@ -53,7 +54,7 @@ public class TrieNode {
     
     @Override
     public String toString() {
-        return "DEPTH: " + this.depth + "| FREQ: " + this.freq + "| isEnd: "  +this.isEnd();
+        return "" + this.freq + " Depth : " + this.depth;
     }
 
 

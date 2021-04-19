@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import javaMusic.sovelluslogiikka.Trie;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -56,6 +57,7 @@ public class NoteReader {
                         pino.addLast(note);
                     } else {
                         int[] arr = ArrayUtils.toPrimitive(pino.toArray(new Integer[pino.size()]));
+                        System.out.println(Arrays.toString(arr));
                         trie.insert(arr);
                         pino.removeFirst();
                     }

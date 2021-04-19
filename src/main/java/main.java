@@ -15,12 +15,14 @@ public class main {
         Markovketju m = new Markovketju();
 
         try {
-            NoteReader notereader = new NoteReader("repeats", trie);
-            
+            NoteReader notereader = new NoteReader("fbts", trie);
+
+            int[] freqArray = new int[5];
+            System.out.println("Tulostetaan trie: ");
+            trie.printTrie(trie.getRoot(), freqArray, 0);
         } catch (URISyntaxException ex) {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
 
     }
 }

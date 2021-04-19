@@ -1,8 +1,12 @@
 package javaMusic.sovelluslogiikka;
 
+import java.util.Arrays;
 
 /**
- * Luokka luo Trie-tietorakneteen joka tallentaa nuottisarjoja periaattella 1) taulukon indeksi on nuotin korkeus ja 2) taulukon sisältö on kyseisen nuotin esiintymisten lukumäärä.
+ * Luokka luo Trie-tietorakneteen joka tallentaa nuottisarjoja periaattella 1)
+ * taulukon indeksi on nuotin korkeus ja 2) taulukon sisältö on kyseisen nuotin
+ * esiintymisten lukumäärä.
+ *
  * @author Leo Niemi
  */
 public class Trie {
@@ -13,13 +17,14 @@ public class Trie {
         root = new TrieNode(0);
     }
 
-    
     /**
-     * Metodi lisää nuottisarjan trieen tallentaen jokaisen nuotin esiintymisfrekvenssin taulukkoon 
-     * @param arrayOfNotes 
+     * Metodi lisää nuottisarjan trieen tallentaen jokaisen nuotin
+     * esiintymisfrekvenssin taulukkoon
+     *
+     * @param arrayOfNotes Taulukollinen koknaislukuja välillä 0-127
      */
     public void insert(int[] arrayOfNotes) {
-       
+
         TrieNode node = root;
         for (int i = 0; i < arrayOfNotes.length; i++) {
             int note = arrayOfNotes[i];
@@ -44,10 +49,10 @@ public class Trie {
 
     public boolean search(int[] word) {
         TrieNode node = searchNode(word);
-        if  (node == null) {
+        if (node == null) {
             return false;
         } else {
-            if  (node.isEnd()) {
+            if (node.isEnd()) {
                 return true;
             }
         }
@@ -59,15 +64,31 @@ public class Trie {
         TrieNode node = root;
         for (int i = 0; i < s.length; i++) {
             int note = s[i];
-            if  (node.getChildren()[note] != null) {
+            if (node.getChildren()[note] != null) {
                 node = node.getChildren()[note];
             } else {
                 return null;
             }
         }
-        if  (node == root) {
+        if (node == root) {
             return null;
         }
         return node;
+    }
+
+    public TrieNode getRoot() {
+        return root;
+    }
+    
+    public void printTrie(TrieNode root, int[] freqArray, int depth) {
+        if (root.isEnd()) {
+            System.out.println(Arrays.toString(freqArray));
+        }
+        for (int i = 0; i < 126; i++) {
+            if (root.getChildren()[i] != null) {
+                freqArray[depth] = root.getChildren()[i].getFreq();
+                printTrie(root.getChildren()[i], freqArray, depth + 1);
+            }
+        }
     }
 }
