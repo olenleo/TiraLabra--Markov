@@ -23,6 +23,7 @@ public class Markovketju {
      * ilmaisee todennäköisyyttä siirtyä kyseiseen sointuun.
     */
     public Markovketju() {
+        System.out.println("Markov luotu");
         r = new Random();
 
         todennakoisyysmatriisi = new double[6][6];
@@ -116,7 +117,7 @@ public class Markovketju {
     private String getChordFromIndex(int row) {
         double k = r.nextDouble();
         for (int i = 0; i < todennakoisyysmatriisi.length; i++) {
-            // System.out.println("k:[" + k + "], matrix[" + row +"][" + i + "] = " + todennakoisyysmatriisi[row][i]  + " => " + chords[i] );
+             System.out.println("k:[" + k + "], matrix[" + row +"][" + i + "] = " + todennakoisyysmatriisi[row][i]  + " => " + chords[i] );
             if (todennakoisyysmatriisi[row][i] >= k) {
                 System.out.println(chords[i]);
                 piChords.add("chord(:" + chords[i] + ", :major)");
@@ -130,6 +131,10 @@ public class Markovketju {
      * @return formatoitu ArrayList
      */
     public ArrayList<String> getPiChords() {
+        for (int i = 0; i < 10; i++) {
+            getChord("C");
+        }
+        piChords.add(getChord("C"));
         return this.piChords;
     }
 }

@@ -19,7 +19,7 @@ public class TrieNode {
         this.children = new TrieNode[127];
         this.depth = depth;
         this.freq = 0;
-        if (this.depth == 5) {
+        if (this.depth == 12) {
             this.end = true;
         }
     }
@@ -54,7 +54,7 @@ public class TrieNode {
     
     @Override
     public String toString() {
-        return "" + this.freq + " Depth : " + this.depth;
+        return "" + this.freq + " " + this.isEnd();
     }
 
 

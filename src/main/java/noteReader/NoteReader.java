@@ -53,7 +53,7 @@ public class NoteReader {
                 if (!notesInUse[note]) {
                     notesInUse[note] = true;
                 } else {
-                    if (pino.size() < 5) {
+                    if (pino.size() < 12) {
                         pino.addLast(note);
                     } else {
                         int[] arr = ArrayUtils.toPrimitive(pino.toArray(new Integer[pino.size()]));
