@@ -23,7 +23,7 @@ public class Markovketju {
      * ilmaisee todennäköisyyttä siirtyä kyseiseen sointuun.
     */
     public Markovketju() {
-        System.out.println("Markov luotu");
+        
         r = new Random();
 
         todennakoisyysmatriisi = new double[6][6];

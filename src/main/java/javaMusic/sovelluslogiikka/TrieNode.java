@@ -1,7 +1,11 @@
 package javaMusic.sovelluslogiikka;
+
 import java.util.Arrays;
+import noteReader.NoteReader;
+
 /**
  * Trie-rakenteen solmu.
+ *
  * @author Leo Niemi
  */
 public class TrieNode {
@@ -10,16 +14,17 @@ public class TrieNode {
     private boolean end = false;
     private int depth;
     private int freq;
-    
+
     /**
      * Jokainen TrieNode sisältää viitteen lapsiinsa.
+     *
      * @param depth Solmun syvyys tietorakenteessa
      */
-    public TrieNode(int depth) {
+    public TrieNode(int depth, int len) {
         this.children = new TrieNode[127];
         this.depth = depth;
         this.freq = 0;
-        if (this.depth == 12) {
+        if (this.depth == len - 1) {
             this.end = true;
         }
     }
@@ -51,12 +56,10 @@ public class TrieNode {
     public TrieNode() {
         this.children = new TrieNode[127];
     }
-    
+
     @Override
     public String toString() {
         return "" + this.freq + " " + this.isEnd();
     }
-
-
 
 }

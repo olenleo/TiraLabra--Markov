@@ -26,12 +26,12 @@ public class TrieTest {
     private static NoteReader notereader;
 
     public TrieTest() throws IOException {
-        this.list1 = new int[]{36, 36, 36, 36, 36};
+        this.list1 = new int[]{36, 36, 36, 36, 36, 36, 36, 36, 38, 38, 38, 38};
         this.olematonList = new int[]{1, 2, 3, 4, 5};
-        this.emptyTrie = new Trie();
-        this.trie = new Trie();
+        this.emptyTrie = new Trie(12);
+        this.trie = new Trie(12);
         try {
-            notereader = new NoteReader("repeats", trie);
+            notereader = new NoteReader("repeats", trie,12);
         } catch (URISyntaxException | FileNotFoundException ex) {
             Logger.getLogger(TrieTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,6 +67,7 @@ public class TrieTest {
 
     @Test
     public void hakuLoytaaSananTriesta() {
+        trie.printTrie(trie.getRoot(), new String[20], 0);
         assertTrue(trie.search(list1));
     }
 
@@ -75,6 +76,7 @@ public class TrieTest {
         int[] correctPrefix = {36, 36};
         assertTrue(trie.startsWith(correctPrefix));
     }
+
     @Test
     public void prefixHakuEiPalutaVirheellistaPrefixia() {
         int[] falsePrefix = {1, 1};
