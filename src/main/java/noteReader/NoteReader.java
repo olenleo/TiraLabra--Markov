@@ -35,18 +35,21 @@ public class NoteReader {
      * @param filename MidiCSV-ohjelman tuottaman .csv-tiedoston nimi ilman
      * tiedostopäätettä
      *
-     * @param trie trie-tietorakenne
+     * @param trie Käytettävä trie-tietorakenne
+     * @param len Arvottujen nuottisarjojen pituus
      * @throws URISyntaxException
      * @throws FileNotFoundException
      * @throws IOException
      */
     public NoteReader(String filename, Trie trie, int len) throws URISyntaxException, FileNotFoundException, IOException {
         this.filename = filename;
-        System.out.println("HI I'm notereader " + this.filename);
         this.trie = trie;
         this.len = len;
     }
 
+    /**
+     * Metodi lukee esiformatoidun csv-tiedoston ja lisää nuottisarjoja trieen.
+     */
     public void read() {
         try {
             URL res = getClass().getClassLoader().getResource(this.filename + ".csv");
@@ -69,7 +72,6 @@ public class NoteReader {
                             pino.addLast(note);
                         } else {
                             int[] arr = ArrayUtils.toPrimitive(pino.toArray(new Integer[pino.size()]));
-                            System.out.println(Arrays.toString(arr));
                             trie.insert(arr);
                             pino.removeFirst();
                         }

@@ -6,13 +6,13 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javaMusic.Main;
-import javaMusic.sovelluslogiikka.Arpoja;
+import javaMusic.sovelluslogiikka.MarkovGenerator;
 import javaMusic.sovelluslogiikka.Trie;
 import javaMusic.sovelluslogiikka.TrieNode;
 import noteReader.NoteReader;
 
 /**
- *
+ * Yksinkertainen tekstikäyttöliittymä joka kysyy tiedostonimeä, 
  * @author Leo Niemi
  */
 public class TextUI {
@@ -20,7 +20,7 @@ public class TextUI {
     private Scanner scanner;
     private Trie trie;
     private TrieNode root;
-    private Arpoja arpoja;
+    private MarkovGenerator arpoja;
     private String filename;
     private int amount, len;
 
@@ -30,24 +30,19 @@ public class TextUI {
     }
 
     public void start() {
-
         scanner = new Scanner(System.in);
-
         readUserInstructions();
         System.out.println(filename);
         trie = new Trie(len);
         root = trie.getRoot();
-        arpoja = new Arpoja(trie);
-
+        arpoja = new MarkovGenerator();
         try {
             NoteReader notereader = new NoteReader(filename, trie, len);
             notereader.read();
             String[] freqArray = new String[len];
-
             for (int i = 0; i < amount; i++) {
                 arpoja.generateSequence(root, freqArray, 0);
             }
-
         } catch (URISyntaxException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -68,5 +63,4 @@ public class TextUI {
     public int getLen() {
         return len;
     }
-
 }

@@ -32,6 +32,7 @@ public class TrieTest {
         this.trie = new Trie(12);
         try {
             notereader = new NoteReader("repeats", trie,12);
+            notereader.read();
         } catch (URISyntaxException | FileNotFoundException ex) {
             Logger.getLogger(TrieTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,7 +68,6 @@ public class TrieTest {
 
     @Test
     public void hakuLoytaaSananTriesta() {
-        trie.printTrie(trie.getRoot(), new String[20], 0);
         assertTrue(trie.search(list1));
     }
 

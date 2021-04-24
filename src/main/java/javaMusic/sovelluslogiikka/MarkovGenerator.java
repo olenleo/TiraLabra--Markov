@@ -1,14 +1,12 @@
 package javaMusic.sovelluslogiikka;
 
 import java.util.Arrays;
-import java.util.Random;
 
-public class Arpoja {
+public class MarkovGenerator {
 
-    private Random r = new Random();
-    private double num = 0;
-
-    public Arpoja(Trie trie) {
+    private double num;
+    private RandomNumberGenerator rng = new RandomNumberGenerator();
+    public MarkovGenerator() {
 
     }
 
@@ -30,6 +28,7 @@ public class Arpoja {
             }
         }
     }
+// TODO : generate double
 
     /**
      * Metodi arpoo yhden nuottisarjan
@@ -38,11 +37,9 @@ public class Arpoja {
      * @param freqArray
      * @param depth
      * @return
-     *
-     *
      */
     public String[] generateSequence(TrieNode root, String[] freqArray, int depth) {
-        num = r.nextDouble();
+        num = rng.nextDouble();
         double sumOfOdds = 0;
         if (root.isEnd()) {
             System.out.println(Arrays.toString(freqArray) + ",");
@@ -57,23 +54,22 @@ public class Arpoja {
             }
         }
 
-        double edellinen = odds[0];
+        double previous = odds[0];
         for (int i = 1; i < odds.length; i++) {
             if (odds[i] != 0) {
-                double nykyinen = odds[i] / sumOfOdds;
-                odds[i] = (double) (edellinen + nykyinen);
-                edellinen = odds[i];
+                double current = odds[i] / sumOfOdds;
+                odds[i] = (double) (previous + current);
+                previous = odds[i];
             }
         }
 
         for (int i = 0; i < odds.length; i++) {
             if (num <= odds[i] && odds[i] > 0) {
                 freqArray[depth] = Integer.toString(i);
-                num = r.nextDouble();
+                num = rng.nextDouble();
                 return generateSequence(root.getChildren()[i], freqArray, depth + 1);
             }
         }
         return freqArray;
     }
-
 }

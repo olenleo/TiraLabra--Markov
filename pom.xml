@@ -26,6 +26,20 @@
                 <artifactId>maven-jxr-plugin</artifactId>
                 <version>2.5</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                            <mainClass>javaMusic.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>    
+            
         </plugins>
     </build>
     <dependencies>
