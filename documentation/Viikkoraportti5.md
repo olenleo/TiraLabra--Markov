@@ -3,8 +3,7 @@
 # Mitä olen tehnyt tällä viikolla?
  Olen toteuttanut tekstikäyttöliittymän, trie-rakenteen korjauksen, satunnaisia liukulukuja arpovan luokan ja refaktoroinut sovelluksen siten että käyttäjä voi valita arvottujen (ja tallennettujen) nuottisarjojen pituuksia.
 
-Olen lisännyt examples-kansioon hyvin yksinkertaisen [Sonic Pi:ssä](https://sonic-pi.net/) toimivan [ohjelman](https://github.com/olenleo/TiraLabra--Markov/blob/main/examples/bach_esimerkki.rb) ja sen tuottaman audion [.mp3-muodossa](https://github.com/olenleo/TiraLabra--Markov/blob/main/examples/bach_example.mp3). 
-
+Olen lisännyt examples-kansioon hyvin yksinkertaisen [Sonic Pi:ssä](https://sonic-pi.net/) toimivan [ohjelman](https://github.com/olenleo/TiraLabra--Markov/blob/main/examples/bach_esimerkki.rb) ja sen tuottaman audion [.mp3-muodossa](https://github.com/olenleo/TiraLabra--Markov/blob/main/examples/bach_example.mp3). Saadut kokonaislukuja sisältävät taulukot on generoitu Bachin sellosarja no. 1, G-duuri (BWV 1007) preludin pohjalta. Tämä puolestaan on luettu resources/solobach.csv-tiedostosta.
 
 # Miten ohjelma on edistynyt?
 Ohjelma on edistynyt melko paljon. Kompastuskysymyksiä on nyt kaksi: nuottien kestot / tauot sekä polyfonia, niistä enemmän alla.
@@ -25,3 +24,4 @@ Työmäärä kasvaisi kuitenkin melko paljon midi-informaation käsittelyn myöt
 # Mitä teen seuraavaksi?
 Dokumentaationi on hyvin puutteellista. Testit ovat myös erittäni minimaalisella tasolla.
 Suunnittelin testaamani tehokkuutta luomalla hyvin pitkiä midi-tiedostoja ja testaamalla niiden tallennusta ja -hakua. Vaikuttaako tämä järkevältä? 
+Teen suorituskelpoisen jar-tiedoston. Tämä toimii jo pl. että resources-kansion polku on väärin konfiguroitu, jolloin ohjelma ei löydä mukana tulleita .csv-tiedostoja. Korjaan tämän ensi tilassa.
