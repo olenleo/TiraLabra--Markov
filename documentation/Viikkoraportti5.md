@@ -24,4 +24,4 @@ Työmäärä kasvaisi kuitenkin melko paljon midi-informaation käsittelyn myöt
 
 # Mitä teen seuraavaksi?
 Dokumentaationi on hyvin puutteellista. Testit ovat myös erittäni minimaalisella tasolla.
-Suunnittelin testaamani tehokkuutta luomalla 
+Suunnittelin testaamani tehokkuutta luomalla hyvin pitkiä midi-tiedostoja ja testaamalla niiden tallennusta ja -hakua. Vaikuttaako tämä järkevältä? 
