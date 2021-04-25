@@ -25,3 +25,5 @@ Työmäärä kasvaisi kuitenkin melko paljon midi-informaation käsittelyn myöt
 Dokumentaationi on hyvin puutteellista. Testit ovat myös erittäni minimaalisella tasolla.
 Suunnittelin testaamani tehokkuutta luomalla hyvin pitkiä midi-tiedostoja ja testaamalla niiden tallennusta ja -hakua. Vaikuttaako tämä järkevältä? 
 Teen suorituskelpoisen jar-tiedoston. Tämä toimii jo pl. että resources-kansion polku on väärin konfiguroitu, jolloin ohjelma ei löydä mukana tulleita .csv-tiedostoja. Korjaan tämän ensi tilassa.
+
+Tuntikirjanpito: ~10 h tällä viikolla.
