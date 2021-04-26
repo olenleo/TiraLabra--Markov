@@ -12,7 +12,8 @@ import javaMusic.sovelluslogiikka.TrieNode;
 import noteReader.NoteReader;
 
 /**
- * Yksinkertainen tekstikäyttöliittymä joka kysyy tiedostonimeä, 
+ * Yksinkertainen tekstikäyttöliittymä joka kysyy tiedostonimeä,
+ *
  * @author Leo Niemi
  */
 public class TextUI {
@@ -20,7 +21,7 @@ public class TextUI {
     private Scanner scanner;
     private Trie trie;
     private TrieNode root;
-    private MarkovGenerator arpoja;
+    private MarkovGenerator markovGenerator;
     private String filename;
     private int amount, len;
 
@@ -35,14 +36,19 @@ public class TextUI {
         System.out.println(filename);
         trie = new Trie(len);
         root = trie.getRoot();
-        arpoja = new MarkovGenerator();
+
         try {
             NoteReader notereader = new NoteReader(filename, trie, len);
+
             notereader.read();
+            int div = notereader.getDivision();
+            markovGenerator = new MarkovGenerator(notereader.getDivision());
             String[] freqArray = new String[len];
             for (int i = 0; i < amount; i++) {
-                arpoja.generateSequence(root, freqArray, 0);
+                markovGenerator.generateSequence(root, freqArray, 0);
             }
+//            trie.printTrie(trie.getRoot(), new String[len], 0);
+
         } catch (URISyntaxException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

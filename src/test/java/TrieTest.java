@@ -31,7 +31,7 @@ public class TrieTest {
         this.emptyTrie = new Trie(12);
         this.trie = new Trie(12);
         try {
-            notereader = new NoteReader("repeats", trie,12);
+            notereader = new NoteReader("repeats", trie, 12);
             notereader.read();
         } catch (URISyntaxException | FileNotFoundException ex) {
             Logger.getLogger(TrieTest.class.getName()).log(Level.SEVERE, null, ex);
@@ -56,9 +56,7 @@ public class TrieTest {
 
     @Test
     public void olematonHakusanaPalauttaaNull() {
-
         assertFalse(trie.search(olematonList));
-
     }
 
     @Test
@@ -82,5 +80,4 @@ public class TrieTest {
         int[] falsePrefix = {1, 1};
         assertFalse(trie.startsWith(falsePrefix));
     }
-
 }

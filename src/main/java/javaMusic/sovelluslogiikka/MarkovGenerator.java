@@ -6,17 +6,19 @@ public class MarkovGenerator {
 
     private double num;
     private RandomNumberGenerator rng = new RandomNumberGenerator();
-    public MarkovGenerator() {
+    private int division;
 
+    public MarkovGenerator(int division) {
+        this.division = division;
     }
 
-    public void addFrequenciesForChildren(TrieNode node) {
-        int sum = 0;
-        for (int i = 0; i < 127; i++) {
-            sum += node.getChildren()[i].getFreq();
-        }
-    }
-
+    /**
+     * Metodi tulostaa trie-tietorakenteen sisällön testausta varten.
+     *
+     * @param root Juuressa sijaitseva TrieNode-olio
+     * @param freqArray
+     * @param depth pitää kirjaa millä syvyydellä trie:ssä liikutaan.
+     */
     public void printTrie(TrieNode root, String[] freqArray, int depth) {
         if (root.isEnd()) {
             System.out.println(Arrays.toString(freqArray));
@@ -42,6 +44,7 @@ public class MarkovGenerator {
         num = rng.nextDouble();
         double sumOfOdds = 0;
         if (root.isEnd()) {
+//            printSequence(freqArray);
             System.out.println(Arrays.toString(freqArray) + ",");
             return freqArray;
         }
@@ -65,11 +68,21 @@ public class MarkovGenerator {
 
         for (int i = 0; i < odds.length; i++) {
             if (num <= odds[i] && odds[i] > 0) {
-                freqArray[depth] = Integer.toString(i);
+                double len = root.getChildren()[i].getNote().getLength();
+                double round = Math.round(len / division * 100.0) / 100.0;
+                freqArray[depth] = "[" + Integer.toString(i) + "," + round + "]";
                 num = rng.nextDouble();
                 return generateSequence(root.getChildren()[i], freqArray, depth + 1);
             }
         }
         return freqArray;
+    }
+
+    public static void printSequence(String[] freqArray) {
+        String ret = "notes = \n";
+        for (String s : freqArray) {
+
+        }
+
     }
 }

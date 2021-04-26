@@ -12,10 +12,15 @@ import java.util.Arrays;
 public class Trie {
 
     private TrieNode root;
-
+    private int division = 480; // Melko turvallinen luku oletusarvoksi
+    
     public Trie(int len) {
-        root = new TrieNode(0, len);
+        root = new TrieNode(0, len, null);
 
+    }
+
+    public void setDivision(int division) {
+        this.division = division;
     }
 
     /**
@@ -24,14 +29,15 @@ public class Trie {
      *
      * @param arrayOfNotes Taulukollinen koknaislukuja välillä 0-127
      */
-    public void insert(int[] arrayOfNotes) {
+    public void insert(Note[] arrayOfNotes) {
 
         TrieNode node = root;
         for (int i = 0; i < arrayOfNotes.length; i++) {
-            int note = arrayOfNotes[i];
+            int note = arrayOfNotes[i].getPitch();
             TrieNode[] arr = node.getChildren();
+
             if (arr[note] == null) {
-                TrieNode temp = new TrieNode();
+                TrieNode temp = new TrieNode(arrayOfNotes[i]);
                 arr[note] = temp;
                 arr[note].increaseFreq();
                 node = temp;
@@ -82,7 +88,7 @@ public class Trie {
     }
 
     /**
-     * Metodi tulostaa trien syvyyshaun avulla. Testausta varten
+     * Metodi tulostaa trien syvyyshaun avulla. Testausta varten.
      *
      * @param root
      * @param freqArray

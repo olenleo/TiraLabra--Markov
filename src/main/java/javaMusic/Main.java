@@ -1,7 +1,6 @@
 package javaMusic;
 
 import javaMusic.kayttoliittyma.TextUI;
-import javaMusic.sovelluslogiikka.RandomNumberGenerator;
 
 public class Main {
 

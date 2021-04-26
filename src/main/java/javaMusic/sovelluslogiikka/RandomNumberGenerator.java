@@ -16,7 +16,6 @@ public class RandomNumberGenerator {
     }
 
     /**
-     * 
      * Kiinnostava artikkeli aiheesta: https://arxiv.org/pdf/2001.05304.pdf.
      * 
      * @return Liukuluku välillä 0-1 kolmen desimaalin tarkkuudella.
