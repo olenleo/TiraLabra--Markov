@@ -2,15 +2,11 @@ package noteReader;
 
 import com.opencsv.CSVReader;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javaMusic.sovelluslogiikka.Trie;
@@ -46,22 +42,16 @@ public class NoteReader {
         this.trie = trie;
         this.len = len;
     }
-
     /**
      * Metodi lukee esiformatoidun csv-tiedoston ja lisää nuottisarjoja trieen.
      */
     public void read() {
         try {
-            URL res = getClass().getClassLoader().getResource(this.filename + ".csv");
-            File file;
-            file = Paths.get(res.toURI()).toFile();
-            String absolutePath = file.getAbsolutePath();
-            System.out.println(absolutePath);
-            FileReader f = new FileReader(file);
-            BufferedReader bufferedreader = new BufferedReader(f);
+            BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/" + filename + ".csv")));
             CSVReader r = new CSVReader(bufferedreader);
             String[] record;
             ArrayDeque<Integer> pino = new ArrayDeque<>();
+
             while ((record = r.readNext()) != null) {
                 if (record[2].contains("Note_")) {
                     int note = Integer.valueOf(record[4].trim());
@@ -79,8 +69,9 @@ public class NoteReader {
                     }
                 }
             }
-        } catch (URISyntaxException | IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(NoteReader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }
