@@ -1,4 +1,4 @@
-package noteReader;
+package javaMusic.noteReader;
 
 import com.opencsv.CSVReader;
 import java.io.BufferedReader;
@@ -124,7 +124,7 @@ public class NoteReader {
      * @param record
      */
     private void firstNoteMethod(String[] record) {
-        System.out.println(Arrays.toString(record));
+//        System.out.println(Arrays.toString(record));
         int absoluteTime = Integer.valueOf(record[1].trim());
         int notePitch = Integer.valueOf(record[4].trim());
 
@@ -132,13 +132,13 @@ public class NoteReader {
 
             this.firstNoteOffset = absoluteTime;
             noteStartTimes[notePitch] = 0;
-            System.out.println("Set offset to " + this.firstNoteOffset);
+//            System.out.println("Set offset to " + this.firstNoteOffset);
         } else {
-            System.out.println("..?");
+//            System.out.println("..?");
             Note first = new Note(notePitch, absoluteTime, false);
             insertToStack(first);
             lastNoteEndedAt = absoluteTime - firstNoteOffset;
-            System.out.println("end @ " + lastNoteEndedAt);
+//            System.out.println("end @ " + lastNoteEndedAt);
             this.firstNote = false;
         }
     }
@@ -152,7 +152,7 @@ public class NoteReader {
     private boolean noteOperationIsStart(String[] record) {
         String noteOp = record[2].trim();
         int velocity = Integer.valueOf(record[5].trim());
-        System.out.println("noteOperationIsStart\nnoteOp: " + noteOp + " vel: " + velocity);
+//        System.out.println("noteOperationIsStart\nnoteOp: " + noteOp + " vel: " + velocity);
         if (noteOp.equals("Note_off_c")) {
             return false;
         }

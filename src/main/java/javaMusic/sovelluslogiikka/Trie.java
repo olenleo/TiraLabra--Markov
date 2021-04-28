@@ -19,6 +19,11 @@ public class Trie {
 
     }
 
+    /**
+     * Asetetaan midi-tiedostosta luettu division-arvo
+     *
+     * @param division Neljäsosanuottia vastaava aikayksiköiden lukumäärä.
+     */
     public void setDivision(int division) {
         this.division = division;
     }
@@ -27,10 +32,10 @@ public class Trie {
      * Metodi lisää nuottisarjan trieen tallentaen jokaisen nuotin
      * esiintymisfrekvenssin taulukkoon
      *
-     * @param arrayOfNotes Taulukollinen koknaislukuja välillä 0-127
+     * @param arrayOfNotes Taulukollinen nuotteja
      */
     public void insert(Note[] arrayOfNotes) {
-//        System.out.println("Inserting " + Arrays.toString(arrayOfNotes));
+
         TrieNode node = root;
         for (int i = 0; i < arrayOfNotes.length; i++) {
             int note = arrayOfNotes[i].getPitch();
@@ -48,7 +53,11 @@ public class Trie {
         }
         node.setEnd();
     }
-
+/** 
+ * Tällä hetkellä tarpeeton hakumetodi.
+ * @param prefix kokonaisen nuottisarjan osamäärä.
+ * @return 
+ */
     public boolean startsWith(int[] prefix) {
         TrieNode node = searchNode(prefix);
         return node != null;

@@ -2,14 +2,16 @@ package javaMusic.kayttoliittyma;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javaMusic.Main;
+import javaMusic.notePrinter.sonicPiFormat;
 import javaMusic.sovelluslogiikka.MarkovGenerator;
 import javaMusic.sovelluslogiikka.Trie;
 import javaMusic.sovelluslogiikka.TrieNode;
-import noteReader.NoteReader;
+import javaMusic.noteReader.NoteReader;
 
 /**
  * Yksinkertainen tekstikäyttöliittymä joka kysyy tiedostonimeä,
@@ -24,6 +26,8 @@ public class TextUI {
     private MarkovGenerator markovGenerator;
     private String filename;
     private int amount, len;
+    private String[][] data;
+    private sonicPiFormat formatter;
 
     public TextUI() {
         this.filename = "";
@@ -35,6 +39,7 @@ public class TextUI {
         readUserInstructions();
         System.out.println(filename);
         trie = new Trie(len);
+        data = new String[amount][len];
         root = trie.getRoot();
 
         try {
@@ -42,16 +47,25 @@ public class TextUI {
             notereader.read();
             markovGenerator = new MarkovGenerator(notereader.getDivision());
             String[] freqArray = new String[len];
-            for (int i = 0; i < amount; i++) {
-                markovGenerator.generateSequence(root, freqArray, 0);
+            System.out.println(data.length);
+            System.out.println(data[0].length);
+            for (int i = 0; i < len; i++) {
+                for (int j = 0; j < amount; j++) {
+                    String[] s = markovGenerator.generateSequence(root, freqArray, 0);
+
+                    data[j][i] = s[i];
+                }
+
             }
-//            markovGenerator.printTrie(trie.getRoot(), freqArray, 0);
+
+            formatter = new sonicPiFormat(data);
 
         } catch (URISyntaxException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(TextUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     public void readUserInstructions() {

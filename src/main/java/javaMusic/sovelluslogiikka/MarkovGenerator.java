@@ -60,7 +60,7 @@ public class MarkovGenerator {
 
         double previous = odds[0] / sumOfOdds;
         odds[0] = previous;
-       for (int i = 1; i < odds.length; i++) {
+        for (int i = 1; i < odds.length; i++) {
             if (odds[i] != 0) {
                 double current = odds[i] / sumOfOdds;
                 odds[i] = (double) (previous + current);
@@ -78,13 +78,5 @@ public class MarkovGenerator {
             }
         }
         return freqArray;
-    }
-
-    public static void printSequence(String[] freqArray) {
-        String ret = "notes = \n";
-        for (String s : freqArray) {
-
-        }
-
     }
 }

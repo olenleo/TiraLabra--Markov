@@ -5,7 +5,7 @@ import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javaMusic.sovelluslogiikka.Trie;
-import noteReader.NoteReader;
+import javaMusic.noteReader.NoteReader;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
