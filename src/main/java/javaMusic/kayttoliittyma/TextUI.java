@@ -39,15 +39,13 @@ public class TextUI {
 
         try {
             NoteReader notereader = new NoteReader(filename, trie, len);
-
             notereader.read();
-            int div = notereader.getDivision();
             markovGenerator = new MarkovGenerator(notereader.getDivision());
             String[] freqArray = new String[len];
             for (int i = 0; i < amount; i++) {
                 markovGenerator.generateSequence(root, freqArray, 0);
             }
-//            trie.printTrie(trie.getRoot(), new String[len], 0);
+//            markovGenerator.printTrie(trie.getRoot(), freqArray, 0);
 
         } catch (URISyntaxException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);

@@ -10,6 +10,7 @@ public class MarkovGenerator {
 
     public MarkovGenerator(int division) {
         this.division = division;
+
     }
 
     /**
@@ -43,8 +44,8 @@ public class MarkovGenerator {
     public String[] generateSequence(TrieNode root, String[] freqArray, int depth) {
         num = rng.nextDouble();
         double sumOfOdds = 0;
+
         if (root.isEnd()) {
-//            printSequence(freqArray);
             System.out.println(Arrays.toString(freqArray) + ",");
             return freqArray;
         }
@@ -57,8 +58,9 @@ public class MarkovGenerator {
             }
         }
 
-        double previous = odds[0];
-        for (int i = 1; i < odds.length; i++) {
+        double previous = odds[0] / sumOfOdds;
+        odds[0] = previous;
+       for (int i = 1; i < odds.length; i++) {
             if (odds[i] != 0) {
                 double current = odds[i] / sumOfOdds;
                 odds[i] = (double) (previous + current);

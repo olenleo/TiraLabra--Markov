@@ -7,7 +7,7 @@
 1, 0, Control_c, 0, 101, 0
 1, 0, Control_c, 0, 100, 0
 1, 0, Control_c, 0, 6, 6
-1, 1440, Note_on_c, 0, 53, 89
+1, 0, Note_on_c, 0, 53, 89
 1, 1600, Note_off_c, 0, 53, 64
 1, 1600, Note_on_c, 0, 53, 89
 1, 1760, Note_off_c, 0, 53, 64

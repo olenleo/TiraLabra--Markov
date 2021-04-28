@@ -8,12 +8,10 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javaMusic.sovelluslogiikka.Note;
 import javaMusic.sovelluslogiikka.Trie;
-import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * Luokka lukee esiformatoidun .csv-tiedoston ja muuttaa sen käyttökelpoiseksi
@@ -23,11 +21,15 @@ import org.apache.commons.lang3.ArrayUtils;
  */
 public class NoteReader {
 
-    private int[] notesInUse = new int[127];
+    private int[] noteStartTimes = new int[127];
     private String filename;
     private Trie trie;
     private int len;
     private int division;
+    private int firstNoteOffset;
+    private int lastNoteEndedAt;
+    private ArrayDeque<Note> noteStack;
+    private boolean firstNote;
 
     /**
      * Midi-tiedoston otsakkeen division-arvo vastaa aikayksikköjen lukumäärää
@@ -36,7 +38,6 @@ public class NoteReader {
      * @return positiivinen kokonaisluku.
      */
     public int getDivision() {
-        System.out.println("ACc getDivision ret " + this.division );
         return this.division;
     }
 
@@ -54,9 +55,11 @@ public class NoteReader {
      * @throws IOException
      */
     public NoteReader(String filename, Trie trie, int len) throws URISyntaxException, FileNotFoundException, IOException {
+        this.firstNote = true;
         this.filename = filename;
         this.trie = trie;
         this.len = len;
+        this.firstNoteOffset = 0;
     }
 
     /**
@@ -67,50 +70,76 @@ public class NoteReader {
             BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/" + filename + ".csv")));
             CSVReader r = new CSVReader(bufferedreader);
             String[] record;
-            ArrayDeque<Note> pino = new ArrayDeque<>();
-            int lastNoteEndedAt = -1;
+            noteStack = new ArrayDeque<>();
+
             while ((record = r.readNext()) != null) {
                 String command = record[2];
                 if (command.contains("Header")) {
                     this.division = Integer.valueOf(record[5].trim());
-                            }
+                }
                 if (command.contains("Note_")) {
-
-                    int absoluteTime = Integer.valueOf(record[1].trim()) + 1;
-                    int notePitch = Integer.valueOf(record[4].trim());
-
-                    if (notesInUse[notePitch] == 0) {
-                        notesInUse[notePitch] = absoluteTime;
-//                        System.out.println("Note " + notePitch + " start at " + (absoluteTime - 1));
-                        if (lastNoteEndedAt > 0 && lastNoteEndedAt < absoluteTime - 1) {
-//                            System.out.println("There was a rest for " + (absoluteTime - lastNoteEndedAt - 1) + " units");
-                            Note note = new Note(absoluteTime - notesInUse[notePitch] - 1, true);
-                        }
+                    if (firstNote) {
+                        firstNoteMethod(record);
                     } else {
-//                         System.out.println("Note " + notePitch + " end at " + (absoluteTime - 1));
-                        Note note = new Note(notePitch, absoluteTime - notesInUse[notePitch] - 1, false);
-
-                        lastNoteEndedAt = absoluteTime - 1;
-                        if (pino.size() < len) {
-                            pino.addLast(note);
-                        } else {
-                            ArrayList<Note> noteList = new ArrayList<>();
-                            pino.forEach(n -> {
-                                noteList.add(n);
-                            });
-                            Note[] array = noteList.toArray(new Note[0]);
-                            trie.insert(array);
-                            pino.removeFirst();
-                        }
-
-                        notesInUse[notePitch] = 0;
+                        noteMethod(record);
                     }
-
                 }
             }
-            
         } catch (IOException ex) {
-            Logger.getLogger(NoteReader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NoteReader.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void noteMethod(String[] record) {
+        int absoluteTime = Integer.valueOf(record[1].trim()) - firstNoteOffset; // + 1 koska nuotti 1 voi alkaa ajassa 0.
+        int notePitch = Integer.valueOf(record[4].trim());
+        String noteOp = record[2];
+        if (noteOp.endsWith("on_c")) {
+            noteStartTimes[notePitch] = absoluteTime;
+
+            if (absoluteTime - lastNoteEndedAt > 0) {
+                Note restNote = new Note(absoluteTime - lastNoteEndedAt, true);
+                insertToStack(restNote);
+                lastNoteEndedAt = absoluteTime;
+            }
+        } else if (noteOp.endsWith("off_c")) {
+            int noteLength = absoluteTime - noteStartTimes[notePitch];
+            noteStartTimes[notePitch] = 0;
+            Note noteToAdd = new Note(notePitch, noteLength, false);
+            lastNoteEndedAt = absoluteTime;
+            insertToStack(noteToAdd);
+        }
+    }
+
+    private void firstNoteMethod(String[] record) {
+        int absoluteTime = Integer.valueOf(record[1].trim());
+        int notePitch = Integer.valueOf(record[4].trim());
+        String noteOp = record[2];
+        if (noteOp.endsWith("on_c")) {
+            this.firstNoteOffset = absoluteTime;
+            noteStartTimes[notePitch] = 0;
+            System.out.println("Set offset to " + this.firstNoteOffset);
+        } else if (noteOp.endsWith("off_c")) {
+            Note first = new Note(notePitch, absoluteTime, false);
+            insertToStack(first);
+            lastNoteEndedAt = absoluteTime - firstNoteOffset;
+            System.out.println("end @ " + lastNoteEndedAt);
+            this.firstNote = false;
+        }
+    }
+
+    private void insertToStack(Note note) {
+        if (noteStack.size() < len) {
+            noteStack.addLast(note);
+        } else {
+            ArrayList<Note> noteList = new ArrayList<>();
+            noteStack.forEach(n -> {
+                noteList.add(n);
+            });
+            Note[] array = noteList.toArray(new Note[len]);
+            trie.insert(array);
+            noteStack.removeFirst();
         }
     }
 

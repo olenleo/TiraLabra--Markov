@@ -13,7 +13,7 @@ public class Trie {
 
     private TrieNode root;
     private int division = 480; // Melko turvallinen luku oletusarvoksi
-    
+
     public Trie(int len) {
         root = new TrieNode(0, len, null);
 
@@ -30,7 +30,7 @@ public class Trie {
      * @param arrayOfNotes Taulukollinen koknaislukuja välillä 0-127
      */
     public void insert(Note[] arrayOfNotes) {
-
+//        System.out.println("Inserting " + Arrays.toString(arrayOfNotes));
         TrieNode node = root;
         for (int i = 0; i < arrayOfNotes.length; i++) {
             int note = arrayOfNotes[i].getPitch();
