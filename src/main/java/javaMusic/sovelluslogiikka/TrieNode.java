@@ -1,8 +1,5 @@
 package javaMusic.sovelluslogiikka;
 
-import java.util.Arrays;
-import java.util.Random;
-import noteReader.NoteReader;
 
 /**
  * Trie-rakenteen solmu.
@@ -18,11 +15,11 @@ public class TrieNode {
     private Note note;
 
     /**
-     * Jokainen TrieNode sisältää viitteen lapsiinsa.
+     * Jokainen TrieNode pitää kirjaa siitä kuinka usein se on esiintynyt ja sisältää viitteen lapsiinsa.
      *
      * @param depth Solmun syvyys tietorakenteessa
-     * @param position
-     * @param note
+     * @param position 
+     * @param note viittaus nuotti-olioon
      */
     public TrieNode(int depth, int position, Note note) {
         this.children = new TrieNode[127];

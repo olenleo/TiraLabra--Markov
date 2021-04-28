@@ -92,6 +92,11 @@ public class NoteReader {
         }
     }
 
+    /**
+     * Apumetodi tarkistaa onko midi-event nuotin alku vai loppu.
+     *
+     * @param record MidiCSV-tiedostosta luettu rivi
+     */
     private void noteMethod(String[] record) {
         int absoluteTime = Integer.valueOf(record[1].trim()) - firstNoteOffset; // + 1 koska nuotti 1 voi alkaa ajassa 0.
         int notePitch = Integer.valueOf(record[4].trim());
@@ -112,6 +117,12 @@ public class NoteReader {
         }
     }
 
+    /**
+     * Metodi etsii ensimmäisen nuotin alun, lopun ja tallettaa muistiin
+     * alkupisteen offset-muuttujaan nuottikestojen siistimistä varten.
+     *
+     * @param record
+     */
     private void firstNoteMethod(String[] record) {
         System.out.println(Arrays.toString(record));
         int absoluteTime = Integer.valueOf(record[1].trim());
@@ -132,6 +143,12 @@ public class NoteReader {
         }
     }
 
+    /**
+     * Apumetodi palauttaa true jos midi-komento on uuden nuotin alku.
+     *
+     * @param record
+     * @return midi-komento on uuden nuotin alkupiste.
+     */
     private boolean noteOperationIsStart(String[] record) {
         String noteOp = record[2].trim();
         int velocity = Integer.valueOf(record[5].trim());
@@ -139,12 +156,15 @@ public class NoteReader {
         if (noteOp.equals("Note_off_c")) {
             return false;
         }
-        if (noteOp.equals("Note_on_c") && velocity == 0) {
-            return false;
-        }
-        return true;
+        return !(noteOp.equals("Note_on_c") && velocity == 0); // velocity == 0 ilmaisee nuotim päättymistä
     }
 
+    /**
+     * Metodi lisää nuotin pinoon. Kun pinon koko saavuttaa tietyn määreen pino
+     * käännetään taulukoksi ja lisätään trieen.
+     *
+     * @param note Lisättävä nuotti
+     */
     private void insertToStack(Note note) {
         if (noteStack.size() < len) {
             noteStack.addLast(note);

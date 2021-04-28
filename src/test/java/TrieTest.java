@@ -25,6 +25,11 @@ public class TrieTest {
 
     private static NoteReader notereader;
 
+    /**
+     * HUOM! Tässä testataan vanhentunutta toteutusta. Korjattava ensi tilassa.
+     *
+     * @throws IOException
+     */
     public TrieTest() throws IOException {
         this.list1 = new int[]{36, 36, 36, 36, 36, 36, 36, 36, 38, 38, 38, 38};
         this.olematonList = new int[]{1, 2, 3, 4, 5};
