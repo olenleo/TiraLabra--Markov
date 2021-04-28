@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javaMusic.sovelluslogiikka.Note;
@@ -94,8 +95,7 @@ public class NoteReader {
     private void noteMethod(String[] record) {
         int absoluteTime = Integer.valueOf(record[1].trim()) - firstNoteOffset; // + 1 koska nuotti 1 voi alkaa ajassa 0.
         int notePitch = Integer.valueOf(record[4].trim());
-        String noteOp = record[2];
-        if (noteOp.endsWith("on_c")) {
+        if (noteOperationIsStart(record)) {
             noteStartTimes[notePitch] = absoluteTime;
 
             if (absoluteTime - lastNoteEndedAt > 0) {
@@ -103,7 +103,7 @@ public class NoteReader {
                 insertToStack(restNote);
                 lastNoteEndedAt = absoluteTime;
             }
-        } else if (noteOp.endsWith("off_c")) {
+        } else {
             int noteLength = absoluteTime - noteStartTimes[notePitch];
             noteStartTimes[notePitch] = 0;
             Note noteToAdd = new Note(notePitch, noteLength, false);
@@ -113,20 +113,36 @@ public class NoteReader {
     }
 
     private void firstNoteMethod(String[] record) {
+        System.out.println(Arrays.toString(record));
         int absoluteTime = Integer.valueOf(record[1].trim());
         int notePitch = Integer.valueOf(record[4].trim());
-        String noteOp = record[2];
-        if (noteOp.endsWith("on_c")) {
+
+        if (noteOperationIsStart(record)) {
+
             this.firstNoteOffset = absoluteTime;
             noteStartTimes[notePitch] = 0;
             System.out.println("Set offset to " + this.firstNoteOffset);
-        } else if (noteOp.endsWith("off_c")) {
+        } else {
+            System.out.println("..?");
             Note first = new Note(notePitch, absoluteTime, false);
             insertToStack(first);
             lastNoteEndedAt = absoluteTime - firstNoteOffset;
             System.out.println("end @ " + lastNoteEndedAt);
             this.firstNote = false;
         }
+    }
+
+    private boolean noteOperationIsStart(String[] record) {
+        String noteOp = record[2].trim();
+        int velocity = Integer.valueOf(record[5].trim());
+        System.out.println("noteOperationIsStart\nnoteOp: " + noteOp + " vel: " + velocity);
+        if (noteOp.equals("Note_off_c")) {
+            return false;
+        }
+        if (noteOp.equals("Note_on_c") && velocity == 0) {
+            return false;
+        }
+        return true;
     }
 
     private void insertToStack(Note note) {
