@@ -28,12 +28,8 @@ public class SonicPiFormat {
             Logger.getLogger(SonicPiFormat.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        /*
-        smör mörkt brö tuoa papper bråccoli ctiron blommor knackis vindruvor majonaäs gräddfil, chips 
-
-        /*
-        smör mörkt brö tuoa papper bråccoli ctiron blommor knackis vindruvor majonaäs gräddfil, chips 
-         */
+     
+     
     }
 
     private void createFile(String fullPath) throws IOException {

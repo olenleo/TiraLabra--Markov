@@ -12,7 +12,7 @@ import java.util.Random;
  */
 
 
-public class MarkovKetju {
+public class Markovketju {
 
     private double[][] todennakoisyysmatriisi;
     private String chords[] = {"G", "F", "Am", "Dm", "G/B", "C"};
@@ -23,7 +23,7 @@ public class MarkovKetju {
      * Jokainen rivi ilmaisee lähtösoinnun ja jokainen sarake
      * ilmaisee todennäköisyyttä siirtyä kyseiseen sointuun.
     */
-    public MarkovKetju() {
+    public Markovketju() {
         
         r = new Random();
 
