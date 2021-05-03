@@ -5,13 +5,14 @@ import java.util.Random;
 
 /**
  * Luokka sisältää toiminnallisuuden C-duurissa liikkuvan sointukierron
- * generoimiseen.
+ * generoimiseen. Tämä luokka ei ole käytössä sovelluksessa eli
+ * TODO: Poisto.
  *
  * @author Leo Niemi
  */
 
 
-public class Markovketju {
+public class MarkovKetju {
 
     private double[][] todennakoisyysmatriisi;
     private String chords[] = {"G", "F", "Am", "Dm", "G/B", "C"};
@@ -22,7 +23,7 @@ public class Markovketju {
      * Jokainen rivi ilmaisee lähtösoinnun ja jokainen sarake
      * ilmaisee todennäköisyyttä siirtyä kyseiseen sointuun.
     */
-    public Markovketju() {
+    public MarkovKetju() {
         
         r = new Random();
 

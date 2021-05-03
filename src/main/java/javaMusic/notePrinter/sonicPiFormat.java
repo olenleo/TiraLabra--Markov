@@ -13,20 +13,23 @@ import java.util.logging.Logger;
  *
  * @author Leo Niemi
  */
-public class sonicPiFormat {
+public class SonicPiFormat {
 
     private String[][] data;
     private final String path;
     private File file;
 
-    public sonicPiFormat(String[][] data) {
+    public SonicPiFormat(String[][] data) {
         this.data = data;
         this.path = "C:\\Users\\35850\\Documents\\SONIC PI\\Code\\javaMusic.rb";
         try {
             createFile(this.path);
         } catch (IOException ex) {
-            Logger.getLogger(sonicPiFormat.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SonicPiFormat.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        /*
+        smör mörkt brö tuoa papper bråccoli ctiron blommor knackis vindruvor majonaäs gräddfil, chips 
 
         /*
         smör mörkt brö tuoa papper bråccoli ctiron blommor knackis vindruvor majonaäs gräddfil, chips 

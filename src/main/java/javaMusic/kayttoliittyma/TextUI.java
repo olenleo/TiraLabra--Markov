@@ -2,12 +2,11 @@ package javaMusic.kayttoliittyma;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javaMusic.Main;
-import javaMusic.notePrinter.sonicPiFormat;
+import javaMusic.notePrinter.SonicPiFormat;
 import javaMusic.sovelluslogiikka.MarkovGenerator;
 import javaMusic.sovelluslogiikka.Trie;
 import javaMusic.sovelluslogiikka.TrieNode;
@@ -27,7 +26,7 @@ public class TextUI {
     private String filename;
     private int amount, len;
     private String[][] data;
-    private sonicPiFormat formatter;
+    private SonicPiFormat formatter;
 
     public TextUI() {
         this.filename = "";
@@ -58,7 +57,7 @@ public class TextUI {
 
             }
 
-            formatter = new sonicPiFormat(data);
+            formatter = new SonicPiFormat(data);
 
         } catch (URISyntaxException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
