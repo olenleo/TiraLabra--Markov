@@ -10,7 +10,7 @@ Tällä hetkellä lopputulos tallentuu [Sonic Pi](https://sonic-pi.net/)-synteti
 Lisään suorituskelpoisen JAR-tiedoston ensi tilassa.
 
 ## Vaatimukset
-Repositorio sisältää .mid-tiedostoja testausta varten. Omien tiedostojen importtaminen vaatii ulkoisen [MidiCSV](https://www.fourmilab.ch/webtools/midicsv/)-työkalun asennuksen. Musiikin toisto puolestaan edellyttää [Sonic Pi:n](https://sonic-pi.net/) asentamisen.
+Repositorio sisältää .csv-tiedostoja testausta varten. Omien tiedostojen importtaminen vaatii ulkoisen [MidiCSV](https://www.fourmilab.ch/webtools/midicsv/)-työkalun asennuksen. Musiikin toisto puolestaan edellyttää [Sonic Pi:n](https://sonic-pi.net/) asentamisen.
 
 
 
