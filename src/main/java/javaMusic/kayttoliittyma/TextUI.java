@@ -24,7 +24,7 @@ public class TextUI {
     private TrieNode root;
     private MarkovGenerator markovGenerator;
     private String filename;
-    private int amount, len;
+    private int amount, len, track;
     private String[][] data;
     private SonicPiFormat formatter;
 
@@ -42,21 +42,20 @@ public class TextUI {
         root = trie.getRoot();
 
         try {
-            NoteReader notereader = new NoteReader(filename, trie, len);
+            NoteReader notereader = new NoteReader(filename, trie, len, track);
             notereader.read();
+
             markovGenerator = new MarkovGenerator(notereader.getDivision());
             String[] freqArray = new String[len];
+//            trie.printTrie(root, freqArray, len);
             System.out.println(data.length);
             System.out.println(data[0].length);
             for (int i = 0; i < len; i++) {
                 for (int j = 0; j < amount; j++) {
                     String[] s = markovGenerator.generateSequence(root, freqArray, 0);
-
                     data[j][i] = s[i];
                 }
-
             }
-
             formatter = new SonicPiFormat(data);
 
         } catch (URISyntaxException ex) {
@@ -71,6 +70,9 @@ public class TextUI {
         System.out.println("The program reads a .csv file in the resources folder and prints generated melodies");
         System.out.println("Enter .csv filename");
         this.filename = scanner.nextLine();
+        System.out.println("Enter midi track to read:");
+        System.out.println("(Track 1 is usually a safe bet)");
+        this.track = scanner.nextInt();
         System.out.println("Enter length of note sequences");
         this.len = scanner.nextInt();
         System.out.println("Enter amount of note sequences");

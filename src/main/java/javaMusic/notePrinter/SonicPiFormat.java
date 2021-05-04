@@ -28,8 +28,6 @@ public class SonicPiFormat {
             Logger.getLogger(SonicPiFormat.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-     
-     
     }
 
     private void createFile(String fullPath) throws IOException {
@@ -45,33 +43,32 @@ public class SonicPiFormat {
     }
 
     public void writeBody() throws IOException {
-        String body = "\n"
-                + "use_bpm 250\n"
-                + "use_synth :sine\n"
-                + "len = notes.length - 1\n"
-                + "\n"
+        String body = "use_bpm 180\n"
+                + "rows = notes.length - 1\n"
+                + "len = notes[0].length - 1\n"
                 + "live_loop :test do\n"
-                + "  \n"
-                + "  row = notes[rrand_i(0, len)]\n"
+                + "  use_synth :prophet\n"
+                + "  row_select = rrand_i(0, rows)\n"
+                + "  row = notes[row_select]\n"
                 + "  i = 0\n"
+                + "  \n"
                 + "  len.times do\n"
                 + "    \n"
                 + "    note_object = row[i]\n"
-                + "    \n"
+                + "    puts note_object\n"
                 + "    pitch = note_object[0]\n"
-                + "    rest = note_object[1]\n"
-                + "    \n"
+                + "    sustain = note_object[1]\n"
+                + "    rest = note_object[2]\n"
                 + "    \n"
                 + "    if pitch > 128\n"
                 + "      sleep rest\n"
                 + "    else\n"
-                + "      play pitch , attack: 0.15, release: rest * 2, amp: 0.2\n"
+                + "      play pitch + 12, attack: 0.1, sustain: sustain, amp: 1\n"
                 + "      sleep rest\n"
                 + "    end\n"
-                + "    sleep rest\n"
                 + "    i += 1\n"
                 + "  end\n"
-                + "end\n";
+                + "end";
         try ( BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
             writer.append(body);
         }

@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javaMusic.sovelluslogiikka.Note;
@@ -18,19 +17,21 @@ import javaMusic.sovelluslogiikka.Trie;
  * Luokka lukee esiformatoidun .csv-tiedoston ja muuttaa sen käyttökelpoiseksi
  * informaatioksi.
  *
- *  * @author Leo Niemi
+ * @author Leo Niemi
  */
 public class NoteReader {
 
-    private int[] noteStartTimes = new int[127];
-    private String filename;
-    private Trie trie;
-    private int len;
+    private final int[] noteStartTimes = new int[127];
+    private final String filename;
+    private final Trie trie;
+    private final int len;
+    private int track;
     private int division;
     private int firstNoteOffset;
-    private int lastNoteEndedAt;
+    private int lastSeenNoteStart;
+    private int lastSeenNoteEnd;
     private ArrayDeque<Note> noteStack;
-    private boolean firstNote;
+    private boolean offsetHasBeenSet;
 
     /**
      * Midi-tiedoston otsakkeen division-arvo vastaa aikayksikköjen lukumäärää
@@ -55,12 +56,14 @@ public class NoteReader {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public NoteReader(String filename, Trie trie, int len) throws URISyntaxException, FileNotFoundException, IOException {
-        this.firstNote = true;
+    public NoteReader(String filename, Trie trie, int len, int track) throws URISyntaxException, FileNotFoundException, IOException {
+
+        this.offsetHasBeenSet = false;
         this.filename = filename;
         this.trie = trie;
         this.len = len;
         this.firstNoteOffset = 0;
+        this.track = track;
     }
 
     /**
@@ -72,75 +75,73 @@ public class NoteReader {
             CSVReader r = new CSVReader(bufferedreader);
             String[] record;
             noteStack = new ArrayDeque<>();
+            int previous = 0;
 
             while ((record = r.readNext()) != null) {
                 String command = record[2];
                 if (command.contains("Header")) {
                     this.division = Integer.valueOf(record[5].trim());
                 }
-                if (command.contains("Note_")) {
-                    if (firstNote) {
-                        firstNoteMethod(record);
+                if (command.contains("Note_") && Integer.valueOf(record[0]) == track) {
+                    if (!offsetHasBeenSet) {
+                        setOffset(record);
+                        lastSeenNoteStart = 1;
+                        noteStartTimes[Integer.valueOf(record[4].trim())] = 1; // ensimmäinen nuotti alkaa aina ajasta 1.
+                        offsetHasBeenSet = true;
                     } else {
-                        noteMethod(record);
+                        // Offset on löydetty, joten käsitellään apumetodin avulla nuotit yksitellen.
+                        previous = noteMethod(record, previous);
                     }
                 }
+                if (command.contains("End_track")) {
+                    lastSeenNoteEnd = Integer.valueOf(record[1].trim());
+
+                }
             }
+            System.out.println("****************************\n\nFile read succesfully\n\n****************************");
         } catch (IOException ex) {
             Logger.getLogger(NoteReader.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    /**
-     * Apumetodi tarkistaa onko midi-event nuotin alku vai loppu.
-     *
-     * @param record MidiCSV-tiedostosta luettu rivi
-     */
-    private void noteMethod(String[] record) {
-        int absoluteTime = Integer.valueOf(record[1].trim()) - firstNoteOffset; // + 1 koska nuotti 1 voi alkaa ajassa 0.
+    private int noteMethod(String[] record, int previousNoteEnded) {
+        Note note;
+        int absoluteTime = Integer.valueOf(record[1].trim()) - firstNoteOffset + 1; // + 1 koska nuotti 1 voi alkaa ajassa 0.
         int notePitch = Integer.valueOf(record[4].trim());
-        if (noteOperationIsStart(record)) {
-            noteStartTimes[notePitch] = absoluteTime;
 
-            if (absoluteTime - lastNoteEndedAt > 0) {
-                Note restNote = new Note(absoluteTime - lastNoteEndedAt, true);
-                insertToStack(restNote);
-                lastNoteEndedAt = absoluteTime;
+        if (noteOperationIsEnd(record)) {
+            if (lastSeenNoteEnd == absoluteTime) {
+                note = new Note(notePitch, absoluteTime - noteStartTimes[notePitch]);
+                insertToStack(note);
+            } else {
+                note = new Note(notePitch, absoluteTime - noteStartTimes[notePitch], absoluteTime - previousNoteEnded);
+                noteStartTimes[notePitch] = 0;
+                insertToStack(note);
+                lastSeenNoteEnd = absoluteTime;
             }
-        } else {
-            int noteLength = absoluteTime - noteStartTimes[notePitch];
-            noteStartTimes[notePitch] = 0;
-            Note noteToAdd = new Note(notePitch, noteLength, false);
-            lastNoteEndedAt = absoluteTime;
-            insertToStack(noteToAdd);
+        } else if (noteOperationIsStart(record)) {
+            noteStartTimes[notePitch] = absoluteTime;
+            lastSeenNoteStart = absoluteTime;
         }
+        return lastSeenNoteEnd;
+
     }
 
     /**
-     * Metodi etsii ensimmäisen nuotin alun, lopun ja tallettaa muistiin
-     * alkupisteen offset-muuttujaan nuottikestojen siistimistä varten.
+     * Metodi tallettaa muistiin alkupisteen offset-muuttujaan nuottikestojen
+     * siistimistä varten ja asettaa nuotin käyttöön.
      *
      * @param record
      */
-    private void firstNoteMethod(String[] record) {
-//        System.out.println(Arrays.toString(record));
+    private void setOffset(String[] record) {
         int absoluteTime = Integer.valueOf(record[1].trim());
-        int notePitch = Integer.valueOf(record[4].trim());
-
         if (noteOperationIsStart(record)) {
-
             this.firstNoteOffset = absoluteTime;
-            noteStartTimes[notePitch] = 0;
-//            System.out.println("Set offset to " + this.firstNoteOffset);
-        } else {
-//            System.out.println("..?");
-            Note first = new Note(notePitch, absoluteTime, false);
-            insertToStack(first);
-            lastNoteEndedAt = absoluteTime - firstNoteOffset;
-//            System.out.println("end @ " + lastNoteEndedAt);
-            this.firstNote = false;
+            System.out.println("First note offset: " + this.firstNoteOffset);
+
         }
+
     }
 
     /**
@@ -152,11 +153,13 @@ public class NoteReader {
     private boolean noteOperationIsStart(String[] record) {
         String noteOp = record[2].trim();
         int velocity = Integer.valueOf(record[5].trim());
-//        System.out.println("noteOperationIsStart\nnoteOp: " + noteOp + " vel: " + velocity);
-        if (noteOp.equals("Note_off_c")) {
-            return false;
-        }
-        return !(noteOp.equals("Note_on_c") && velocity == 0); // velocity == 0 ilmaisee nuotim päättymistä
+        return noteOp.equals("Note_on_c") && velocity > 0;
+    }
+
+    private boolean noteOperationIsEnd(String[] record) {
+        String noteOp = record[2].trim();
+        int velocity = Integer.valueOf(record[5].trim());
+        return noteOp.equals("Note_off_c") || (noteOp.equals("Note_on_c") && velocity == 0);
     }
 
     /**

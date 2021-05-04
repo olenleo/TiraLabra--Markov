@@ -67,7 +67,7 @@ public class TrieNode {
 
     @Override
     public String toString() {
-        return "" + this.freq + " " +  this.getNote().isRest() +  " , " + this.isEnd();
+        return "" + this.freq + " "+  " , " + this.isEnd();
     }
 
 }

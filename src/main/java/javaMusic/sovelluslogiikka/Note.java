@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package javaMusic.sovelluslogiikka;
 
 /**
@@ -11,37 +6,49 @@ package javaMusic.sovelluslogiikka;
  */
 public class Note {
 
-    private int length;
     private int pitch;
-    private boolean isRest = false;
+    private int sustain;
+    private int timeToRest;
 
-    public int getLength() {
-        return length;
+    public int getTimeToRest() {
+        return timeToRest;
     }
 
     public int getPitch() {
         return pitch;
     }
 
-    public boolean isRest() {
-        return isRest;
+    public int getSustain() {
+        return sustain;
     }
 
-    public Note(int pitch, int length, boolean isRest) {
-        this.length = length;
+    /**
+     * Nuotti taltioi sävelensä, kestonsa
+     *
+     * @param pitch
+     * @param sustain
+     * @param timeToRest
+     */
+    public Note(int pitch, int sustain, int timeToRest) {
         this.pitch = pitch;
-        this.isRest = isRest;
+        this.sustain = sustain;
+        this.timeToRest = timeToRest;
     }
-
-    public Note(int length, boolean isRest) {
-        this.length = length;
-        this.isRest = isRest;
-        
+    /**
+     * Soinnut ja intervallit - seuraava nuotti alkaa samanaikaisesti.
+     * @param pitch
+     * @param sustain 
+     */
+    
+    public Note(int pitch, int sustain) {
+        this.pitch = pitch;
+        this.sustain = sustain;
+        this.timeToRest = 0;
     }
 
     @Override
     public String toString() {
-        return "" + this.pitch + " " + this.length + " " + this.isRest;
+        return "" + this.pitch + " " + this.sustain + " " + this.timeToRest;
     }
 
 }

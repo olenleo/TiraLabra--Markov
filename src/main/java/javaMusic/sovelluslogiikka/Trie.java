@@ -35,7 +35,8 @@ public class Trie {
      * @param arrayOfNotes Taulukollinen nuotteja
      */
     public void insert(Note[] arrayOfNotes) {
-
+//        System.out.println("Array insert");
+//        System.out.println(Arrays.toString(arrayOfNotes));
         TrieNode node = root;
         for (int i = 0; i < arrayOfNotes.length; i++) {
             int note = arrayOfNotes[i].getPitch();
@@ -53,11 +54,13 @@ public class Trie {
         }
         node.setEnd();
     }
-/** 
- * Tällä hetkellä tarpeeton hakumetodi.
- * @param prefix kokonaisen nuottisarjan osamäärä.
- * @return 
- */
+
+    /**
+     * Tällä hetkellä tarpeeton hakumetodi.
+     *
+     * @param prefix kokonaisen nuottisarjan osamäärä.
+     * @return
+     */
     public boolean startsWith(int[] prefix) {
         TrieNode node = searchNode(prefix);
         return node != null;
@@ -109,7 +112,7 @@ public class Trie {
         }
         for (int i = 0; i < 126; i++) {
             if (root.getChildren()[i] != null) {
-                freqArray[depth] = Integer.toString(root.getChildren()[i].getFreq());
+                freqArray[depth] = "N:" + i + " F:" + Integer.toString(root.getChildren()[i].getFreq());
                 printTrie(root.getChildren()[i], freqArray, depth + 1);
             }
         }

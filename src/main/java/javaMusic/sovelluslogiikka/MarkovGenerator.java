@@ -24,14 +24,13 @@ public class MarkovGenerator {
         if (root.isEnd()) {
             System.out.println(Arrays.toString(freqArray));
         }
-        for (int i = 0; i < 126; i++) {
+        for (int i = 0; i < 127; i++) {
             if (root.getChildren()[i] != null) {
                 freqArray[depth] = "N:" + i + " F:" + Integer.toString(root.getChildren()[i].getFreq());
                 printTrie(root.getChildren()[i], freqArray, depth + 1);
             }
         }
     }
-// TODO : generate double
 
     /**
      * Metodi arpoo yhden nuottisarjan
@@ -46,7 +45,7 @@ public class MarkovGenerator {
         double sumOfOdds = 0;
 
         if (root.isEnd()) {
-            System.out.println(Arrays.toString(freqArray) + ",");
+//            System.out.println(Arrays.toString(freqArray) + ",");
             return freqArray;
         }
 
@@ -70,9 +69,11 @@ public class MarkovGenerator {
 
         for (int i = 0; i < odds.length; i++) {
             if (num <= odds[i] && odds[i] > 0) {
-                double len = root.getChildren()[i].getNote().getLength();
+                double len = root.getChildren()[i].getNote().getSustain();
                 double round = Math.round(len / division * 100.0) / 100.0;
-                freqArray[depth] = "[" + Integer.toString(i) + "," + round + "]";
+                double timeToNext = root.getChildren()[i].getNote().getTimeToRest();
+                // [pitch, sustain, sleep]
+                freqArray[depth] = "[" + Integer.toString(i) + "," + round + "," +(Math.round(timeToNext / division * 100.0) / 100.0 )+ "]";
                 num = rng.nextDouble();
                 return generateSequence(root.getChildren()[i], freqArray, depth + 1);
             }
