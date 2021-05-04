@@ -16,7 +16,6 @@ public class Trie {
 
     public Trie(int len) {
         root = new TrieNode(0, len, null);
-
     }
 
     /**
@@ -35,8 +34,6 @@ public class Trie {
      * @param arrayOfNotes Taulukollinen nuotteja
      */
     public void insert(Note[] arrayOfNotes) {
-//        System.out.println("Array insert");
-//        System.out.println(Arrays.toString(arrayOfNotes));
         TrieNode node = root;
         for (int i = 0; i < arrayOfNotes.length; i++) {
             int note = arrayOfNotes[i].getPitch();
@@ -79,6 +76,12 @@ public class Trie {
         return false;
     }
 
+    /**
+     * Tällä hetkellä tarpeeton hakumetodi.
+     *
+     * @param s
+     * @return
+     */
     public TrieNode searchNode(int[] s) {
         TrieNode node = root;
         for (int i = 0; i < s.length; i++) {

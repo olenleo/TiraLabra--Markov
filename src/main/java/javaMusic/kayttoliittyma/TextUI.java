@@ -13,7 +13,8 @@ import javaMusic.sovelluslogiikka.TrieNode;
 import javaMusic.noteReader.NoteReader;
 
 /**
- * Yksinkertainen tekstikäyttöliittymä joka kysyy tiedostonimeä,
+ * Yksinkertainen tekstikäyttöliittymä joka kysyy tiedostonimeä, 
+ * haluttua midi-raitaa, nuottisarjan pituutta ja nuottisarjojen lukumäärää.
  *
  * @author Leo Niemi
  */
@@ -32,22 +33,20 @@ public class TextUI {
         this.filename = "";
 
     }
-
+/**
+ * Metodi hallinnoi tarvittavien elementtien kutsuja.
+ */
     public void start() {
         scanner = new Scanner(System.in);
         readUserInstructions();
-        System.out.println(filename);
         trie = new Trie(len);
         data = new String[amount][len];
         root = trie.getRoot();
-
         try {
             NoteReader notereader = new NoteReader(filename, trie, len, track);
             notereader.read();
-
             markovGenerator = new MarkovGenerator(notereader.getDivision());
             String[] freqArray = new String[len];
-//            trie.printTrie(root, freqArray, len);
             System.out.println(data.length);
             System.out.println(data[0].length);
             for (int i = 0; i < len; i++) {
@@ -57,13 +56,11 @@ public class TextUI {
                 }
             }
             formatter = new SonicPiFormat(data);
-
         } catch (URISyntaxException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(TextUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     public void readUserInstructions() {
@@ -71,7 +68,6 @@ public class TextUI {
         System.out.println("Enter .csv filename");
         this.filename = scanner.nextLine();
         System.out.println("Enter midi track to read:");
-        System.out.println("(Track 1 is usually a safe bet)");
         this.track = scanner.nextInt();
         System.out.println("Enter length of note sequences");
         this.len = scanner.nextInt();

@@ -5,8 +5,10 @@ import java.util.Arrays;
 public class MarkovGenerator {
 
     private double num;
-    private RandomNumberGenerator rng = new RandomNumberGenerator();
-    private int division;
+    private final RandomNumberGenerator rng = new RandomNumberGenerator();
+    private final int division;
+    private double[] odds;
+    private double sumOfOdds;
 
     public MarkovGenerator(int division) {
         this.division = division;
@@ -33,30 +35,45 @@ public class MarkovGenerator {
     }
 
     /**
-     * Metodi arpoo yhden nuottisarjan
+     * Metodi arpoo yhden nuottisarjan syvyyshaulla.
      *
-     * @param root
-     * @param freqArray
-     * @param depth
-     * @return
+     * @param root Solmu josta haku lähtee.
+     * @param freqArray Nuottisarja
+     * @param depth syvyys tietorakenteessa
+     * @return taulukollinen nuotteja halutussa formaatissa
      */
     public String[] generateSequence(TrieNode root, String[] freqArray, int depth) {
         num = rng.nextDouble();
-        double sumOfOdds = 0;
-
+        sumOfOdds = 0;
         if (root.isEnd()) {
-//            System.out.println(Arrays.toString(freqArray) + ",");
             return freqArray;
         }
+        createTableOfOdds(root);
+        calculateOdds();
+        for (int i = 0; i < odds.length; i++) {
+            if (num <= odds[i] && odds[i] > 0) {
+                double len = root.getChildren()[i].getNote().getSustain();
+                double round = Math.round(len / division * 100.0) / 100.0;
+                double timeToNext = root.getChildren()[i].getNote().getTimeToRest();
+                freqArray[depth] = "[" + Integer.toString(i) + "," + round + "," + (Math.round(timeToNext / division * 100.0) / 100.0) + "]";
+                num = rng.nextDouble();
+                return generateSequence(root.getChildren()[i], freqArray, depth + 1);
+            }
+        }
+        return freqArray;
+    }
 
-        double[] odds = new double[127];
+    private void createTableOfOdds(TrieNode root) {
+        odds = new double[127];
         for (int i = 0; i < 126; i++) {
             if (root.getChildren()[i] != null) {
                 odds[i] = root.getChildren()[i].getFreq();
                 sumOfOdds += odds[i];
             }
         }
+    }
 
+    private void calculateOdds() {
         double previous = odds[0] / sumOfOdds;
         odds[0] = previous;
         for (int i = 1; i < odds.length; i++) {
@@ -66,18 +83,5 @@ public class MarkovGenerator {
                 previous = odds[i];
             }
         }
-
-        for (int i = 0; i < odds.length; i++) {
-            if (num <= odds[i] && odds[i] > 0) {
-                double len = root.getChildren()[i].getNote().getSustain();
-                double round = Math.round(len / division * 100.0) / 100.0;
-                double timeToNext = root.getChildren()[i].getNote().getTimeToRest();
-                // [pitch, sustain, sleep]
-                freqArray[depth] = "[" + Integer.toString(i) + "," + round + "," +(Math.round(timeToNext / division * 100.0) / 100.0 )+ "]";
-                num = rng.nextDouble();
-                return generateSequence(root.getChildren()[i], freqArray, depth + 1);
-            }
-        }
-        return freqArray;
     }
 }
