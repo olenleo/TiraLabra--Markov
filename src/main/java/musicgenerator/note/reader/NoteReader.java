@@ -1,4 +1,4 @@
-package javaMusic.noteReader;
+package musicgenerator.note.reader;
 
 import com.opencsv.CSVReader;
 import java.io.BufferedReader;
@@ -10,8 +10,8 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javaMusic.sovelluslogiikka.Note;
-import javaMusic.sovelluslogiikka.Trie;
+import musicgenerator.sovelluslogiikka.Note;
+import musicgenerator.sovelluslogiikka.Trie;
 
 /**
  * Luokka lukee esiformatoidun .csv-tiedoston ja muuttaa sen käyttökelpoiseksi

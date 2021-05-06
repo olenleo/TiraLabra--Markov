@@ -1,4 +1,4 @@
-package javaMusic.sovelluslogiikka;
+package musicgenerator.sovelluslogiikka;
 
 /**
  * Luokka arpoo satunnaisia liukulukuja (Käsittääkseni linear congruential generator).

@@ -1,4 +1,4 @@
-package javaMusic.sovelluslogiikka;
+package musicgenerator.sovelluslogiikka;
 
 /**
  * Jokainen nuotti taltioi sävelensä, kestonsa ja seuraavan nuotin alkamispisteen.

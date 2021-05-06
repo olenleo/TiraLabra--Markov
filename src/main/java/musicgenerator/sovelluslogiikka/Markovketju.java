@@ -1,4 +1,4 @@
-package javaMusic.sovelluslogiikka;
+package musicgenerator.sovelluslogiikka;
 
 import java.util.ArrayList;
 import java.util.Random;

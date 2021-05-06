@@ -1,4 +1,4 @@
-package javaMusic.notePrinter;
+package musicgenerator.note.printer;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,9 +19,9 @@ public class SonicPiFormat {
     private final String path;
     private File file;
 
-    public SonicPiFormat(String[][] data) {
+    public SonicPiFormat(String[][] data, String filename) {
         this.data = data;
-        this.path = "C:\\Users\\35850\\Documents\\SONIC PI\\Code\\javaMusic.rb";
+        this.path = "C:\\Users\\35850\\Documents\\SONIC PI\\Code\\" + filename + ".rb";
         try {
             createFile(this.path);
         } catch (IOException ex) {
@@ -29,7 +29,11 @@ public class SonicPiFormat {
         }
 
     }
-
+/**
+ * Metodi luo tiedoston ja lisää siihen luetun materiaalin ja käyttökelpoisen koodin.
+ * @param fullPath Polku + tiedostonimi
+ * @throws IOException 
+ */
     private void createFile(String fullPath) throws IOException {
         System.out.println(data.length);
         System.out.println(Arrays.deepToString(data));
@@ -41,9 +45,12 @@ public class SonicPiFormat {
         writeData();
         writeBody();
     }
-
+/**
+ * Kovakoodattu toimiva aloituspiste Sonic Pi:tä varten. 
+ * @throws IOException 
+ */
     public void writeBody() throws IOException {
-        String body = "use_bpm 100\n"
+        String body = "\nuse_bpm 100\n"
                 + "\n"
                 + "rows = notes.length - 1\n"
                 + "len = notes[0].length - 1\n"
@@ -52,8 +59,7 @@ public class SonicPiFormat {
                 + "  use_synth :dtri\n"
                 + "  row_select = rrand_i(0, rows)\n"
                 + "  row = notes[row_select]\n"
-                + "  i = 0\n"
-                + "  \n"
+                + "  i = 0\n\n"
                 + "  len.times do \n"
                 + "    note_object = row[i]\n"
                 + "    puts note_object\n"
@@ -63,13 +69,15 @@ public class SonicPiFormat {
                 + "    play pitch, attack: 0, sustain: sustain, release: 0.02 ,amp: 1\n"
                 + "    sleep rest\n"
                 + "    i += 1\n"
-                + "  end\n"
-                + "end";
-        try ( BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+                + "  end\nend";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
             writer.append(body);
         }
     }
-
+    /**
+     * Kirjoittaa nuotit @writeBody() - metodin kanssa yhteensopivaan taulukkoon.
+     * @throws IOException 
+     */
     public void writeData() throws IOException {
         String noteData = "notes = \n";
         for (int i = 0; i < data.length; i++) {
@@ -85,12 +93,9 @@ public class SonicPiFormat {
                     noteData += data[i][j] + ",";
                 }
             }
-
         }
         BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-        writer.append(' ');
         writer.append(noteData);
-
         writer.close();
     }
 }
