@@ -13,8 +13,8 @@ import javaMusic.sovelluslogiikka.TrieNode;
 import javaMusic.noteReader.NoteReader;
 
 /**
- * Yksinkertainen tekstikäyttöliittymä joka kysyy tiedostonimeä, 
- * haluttua midi-raitaa, nuottisarjan pituutta ja nuottisarjojen lukumäärää.
+ * Yksinkertainen tekstikäyttöliittymä joka kysyy tiedostonimeä, haluttua
+ * midi-raitaa, nuottisarjan pituutta ja nuottisarjojen lukumäärää.
  *
  * @author Leo Niemi
  */
@@ -33,9 +33,10 @@ public class TextUI {
         this.filename = "";
 
     }
-/**
- * Metodi hallinnoi tarvittavien elementtien kutsuja.
- */
+
+    /**
+     * Metodi hallinnoi tarvittavien elementtien kutsuja.
+     */
     public void start() {
         scanner = new Scanner(System.in);
         readUserInstructions();
@@ -63,6 +64,10 @@ public class TextUI {
         }
     }
 
+    /**
+     * Luetaan käyttäjän toiveet halutusta tiedostosta ja midi-raidasta,
+     * sarjojen pituudesta ja toistojen lukumäärästä.
+     */
     public void readUserInstructions() {
         System.out.println("The program reads a .csv file in the resources folder and prints generated melodies");
         System.out.println("Enter .csv filename");

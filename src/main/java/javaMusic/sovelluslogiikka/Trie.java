@@ -19,7 +19,7 @@ public class Trie {
     }
 
     /**
-     * Asetetaan midi-tiedostosta luettu division-arvo
+     * Asetetaan midi-tiedostosta luettu division-arvo.
      *
      * @param division Neljäsosanuottia vastaava aikayksiköiden lukumäärä.
      */
@@ -29,7 +29,7 @@ public class Trie {
 
     /**
      * Metodi lisää nuottisarjan trieen tallentaen jokaisen nuotin
-     * esiintymisfrekvenssin taulukkoon
+     * esiintymisfrekvenssin taulukkoon,
      *
      * @param arrayOfNotes Taulukollinen nuotteja
      */

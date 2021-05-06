@@ -1,7 +1,8 @@
 package javaMusic.sovelluslogiikka;
 
 /**
- *
+ * Jokainen nuotti taltioi sävelensä, kestonsa ja seuraavan nuotin alkamispisteen.
+ * 
  * @author Leo Niemi
  */
 public class Note {
@@ -23,11 +24,11 @@ public class Note {
     }
 
     /**
-     * Nuotti taltioi sävelensä, kestonsa
+     * Nuotti jota seuraa tauko.
      *
      * @param pitch
-     * @param sustain
-     * @param timeToRest
+     * @param sustain 
+     * @param timeToRest kääntyy Sonic Pi-toteutuksessa sleep-komennoksi eli tauoksi.
      */
     public Note(int pitch, int sustain, int timeToRest) {
         this.pitch = pitch;
@@ -35,7 +36,7 @@ public class Note {
         this.timeToRest = timeToRest;
     }
     /**
-     * Soinnut ja intervallit - seuraava nuotti alkaa samanaikaisesti.
+     * Soinnut ja intervallit muodostuvat kun moni nuotti alkaa samanaikaisesti.
      * @param pitch
      * @param sustain 
      */

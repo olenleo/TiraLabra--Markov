@@ -52,6 +52,7 @@ public class NoteReader {
      *
      * @param trie Käytettävä trie-tietorakenne
      * @param len Arvottujen nuottisarjojen pituus
+     * @param track Midi-tiedoston luettavan instrumenttiraidan avain.
      * @throws URISyntaxException
      * @throws FileNotFoundException
      * @throws IOException
@@ -105,6 +106,14 @@ public class NoteReader {
         }
     }
 
+    /**
+     * Metodi lukee midi-käskystä nuotin tiedot, pitäen kirjaa mahdollisesta
+     * tauosta nuottien välillä.
+     *
+     * @param record NoteReader-luokan lukema rivi.
+     * @param previousNoteEnded Viimeksi luettu päättyneen nuotin lopetushetki.
+     * @return tämän nuotin lopetushetki.
+     */
     private int noteMethod(String[] record, int previousNoteEnded) {
         Note note;
         int absoluteTime = Integer.valueOf(record[1].trim()) - firstNoteOffset + 1; // + 1 koska nuotti 1 voi alkaa ajassa 0.
@@ -130,9 +139,9 @@ public class NoteReader {
 
     /**
      * Metodi tallettaa muistiin alkupisteen offset-muuttujaan nuottikestojen
-     * siistimistä varten ja asettaa nuotin käyttöön.
+     * siistimistä varten ja merkitsee nuotin käyttöön.
      *
-     * @param record
+     * @param record NoteReader-luokan lukema rivi
      */
     private void setOffset(String[] record) {
         int absoluteTime = Integer.valueOf(record[1].trim());
@@ -147,7 +156,7 @@ public class NoteReader {
     /**
      * Apumetodi palauttaa true jos midi-komento on uuden nuotin alku.
      *
-     * @param record
+     * @param record NoteReader-luokan lukema rivi
      * @return midi-komento on uuden nuotin alkupiste.
      */
     private boolean noteOperationIsStart(String[] record) {
@@ -156,6 +165,13 @@ public class NoteReader {
         return noteOp.equals("Note_on_c") && velocity > 0;
     }
 
+    /**
+     * Nuotin päättyminen on ilmaistavissa joko "Note_off_c"-komennolla tai
+     * uudella "Note_on_c"-komennolla jonka velocity-parametri on 0.
+     *
+     * @param record NoteReader-luokan lukema rivi
+     * @return midi-komento on uuden nuotin päätepiste.
+     */
     private boolean noteOperationIsEnd(String[] record) {
         String noteOp = record[2].trim();
         int velocity = Integer.valueOf(record[5].trim());
