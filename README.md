@@ -4,7 +4,7 @@ Tietorakenteet ja Algoritmit-harjoitustyö: Proseduraalista musiikkia Markovin k
 ## Kuvaus
 Tämä java-sovellus ottaa syötteekseen esiformatoidun .csv-pohjaisen tiedoston joka sisältää raakaa midi-informaatiota. Sovellus tallettaa halutun pitkiä nuottisarjoja ja niiden esiintymistiheyksiä trie-tietorakenteeseen. Näiden pohjalta generoidaan haluttu määrä nuottisarjoja.
 
-Tällä hetkellä lopputulos tallentuu [Sonic Pi](https://sonic-pi.net/)-syntetisaattorin syntaksia hyödyntävään .rb-tiedostoon. Kyseessä on valmis, soitettava sävellys. Halutessa midi-informaation voi ohjata eteenpäin esimerkiksi OSC-protokollan avulla. 
+Tällä hetkellä lopputulos tallentuu [Sonic Pi](https://sonic-pi.net/)-syntetisaattorin syntaksia hyödyntävään .rb-tiedostoon. Kyseessä on valmis, soitettava sävellys. 
 
 ## Käyttöohjeet
 
