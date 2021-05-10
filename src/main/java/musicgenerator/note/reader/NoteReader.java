@@ -37,7 +37,7 @@ public class NoteReader {
      * Midi-tiedoston otsakkeen division-arvo vastaa aikayksikköjen lukumäärää
      * yhtä neljäsosanuottia kohti. Tätä tarvitaan temmon käsittelyssä.
      *
-     * @return positiivinen kokonaisluku.
+     * @return Aikayksikköjen lukumäärä jokaista neljäsosanuottia kohti.
      */
     public int getDivision() {
         return this.division;
@@ -197,5 +197,4 @@ public class NoteReader {
             noteStack.removeFirst();
         }
     }
-
 }

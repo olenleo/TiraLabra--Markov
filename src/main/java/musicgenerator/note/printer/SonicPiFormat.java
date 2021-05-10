@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Luo Sonic Pi-syntaksilla toimivan tiedoston javaMusic.rb.
+ * Luo Sonic Pi-syntaksilla toimivan tiedoston.
  *
  * @author Leo Niemi
  */
@@ -19,9 +19,13 @@ public class SonicPiFormat {
     private final String path;
     private File file;
 
-    public SonicPiFormat(String[][] data, String filename) {
+    public SonicPiFormat(String[][] data, String filename, String path) {
         this.data = data;
-        this.path = "C:\\Users\\35850\\Documents\\SONIC PI\\Code\\" + filename + ".rb";
+        if (path.isEmpty()) {
+            this.path = "C:\\Users\\35850\\Documents\\SONIC PI\\Code\\" + filename + ".rb";
+        } else {
+            this.path = path + "\\ " + filename + ".rb";
+        }
         try {
             createFile(this.path);
         } catch (IOException ex) {
@@ -29,11 +33,14 @@ public class SonicPiFormat {
         }
 
     }
-/**
- * Metodi luo tiedoston ja lisää siihen luetun materiaalin ja käyttökelpoisen koodin.
- * @param fullPath Polku + tiedostonimi
- * @throws IOException 
- */
+
+    /**
+     * Metodi luo tiedoston ja lisää siihen luetun materiaalin ja
+     * käyttökelpoisen koodin.
+     *
+     * @param fullPath Polku + tiedostonimi
+     * @throws IOException
+     */
     private void createFile(String fullPath) throws IOException {
         System.out.println(data.length);
         System.out.println(Arrays.deepToString(data));
@@ -45,10 +52,12 @@ public class SonicPiFormat {
         writeData();
         writeBody();
     }
-/**
- * Kovakoodattu toimiva aloituspiste Sonic Pi:tä varten. 
- * @throws IOException 
- */
+
+    /**
+     * Kovakoodattu toimiva aloituspiste Sonic Pi:tä varten.
+     *
+     * @throws IOException
+     */
     public void writeBody() throws IOException {
         String body = "\nuse_bpm 100\n"
                 + "\n"
@@ -70,13 +79,16 @@ public class SonicPiFormat {
                 + "    sleep rest\n"
                 + "    i += 1\n"
                 + "  end\nend";
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+        try ( BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
             writer.append(body);
         }
     }
+
     /**
-     * Kirjoittaa nuotit @writeBody() - metodin kanssa yhteensopivaan taulukkoon.
-     * @throws IOException 
+     * Kirjoittaa nuotit @writeBody() - metodin kanssa yhteensopivaan
+     * taulukkoon.
+     *
+     * @throws IOException
      */
     public void writeData() throws IOException {
         String noteData = "notes = \n";

@@ -63,6 +63,10 @@ public class MarkovGenerator {
         return freqArray;
     }
 
+    /**
+     * Asettaa jokaisen nuotin esiintymisfrekvenssin aputaulukkoon.
+     * @param root Tutkittava TrieNode
+     */
     private void createTableOfOdds(TrieNode root) {
         odds = new double[127];
         for (int i = 0; i < 126; i++) {
@@ -72,7 +76,9 @@ public class MarkovGenerator {
             }
         }
     }
-
+    /**
+     * Jokainen esiintymisfrekvenssi jaetaan frekvenssien summalla.
+     */
     private void calculateOdds() {
         double previous = odds[0] / sumOfOdds;
         odds[0] = previous;

@@ -72,14 +72,13 @@ public class Trie {
                 return true;
             }
         }
-
         return false;
     }
 
     /**
-     * Tällä hetkellä tarpeeton hakumetodi.
+     * Tällä hetkellä tarpeeton hakumetodi etsii osajonoja triestä.
      *
-     * @param s
+     * @param s Osajono
      * @return
      */
     public TrieNode searchNode(int[] s) {
@@ -100,24 +99,5 @@ public class Trie {
 
     public TrieNode getRoot() {
         return root;
-    }
-
-    /**
-     * Metodi tulostaa trien syvyyshaun avulla. Testausta varten.
-     *
-     * @param root
-     * @param freqArray
-     * @param depth
-     */
-    public void printTrie(TrieNode root, String[] freqArray, int depth) {
-        if (root.isEnd()) {
-            System.out.println(Arrays.toString(freqArray));
-        }
-        for (int i = 0; i < 126; i++) {
-            if (root.getChildren()[i] != null) {
-                freqArray[depth] = "N:" + i + " F:" + Integer.toString(root.getChildren()[i].getFreq());
-                printTrie(root.getChildren()[i], freqArray, depth + 1);
-            }
-        }
     }
 }

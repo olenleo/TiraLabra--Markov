@@ -26,6 +26,7 @@ public class TextUI {
     private MarkovGenerator markovGenerator;
     private String filename = "";
     private String resultFilename;
+    private String resultPath;
     private int amount, len, track;
     private String[][] data;
     private SonicPiFormat formatter;
@@ -51,7 +52,7 @@ public class TextUI {
                     data[j][i] = s[i];
                 }
             }
-            formatter = new SonicPiFormat(data, resultFilename);
+            formatter = new SonicPiFormat(data, resultFilename, resultPath);
         } catch (URISyntaxException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -68,8 +69,9 @@ public class TextUI {
         System.out.println("Enter .csv filename");
         this.filename = scanner.nextLine();
         System.out.println("Enter filename for end result: ");
-        String s = scanner.nextLine();
-        this.resultFilename = s;
+        this.resultFilename = scanner.nextLine();
+        System.out.println("Enter result path (blank for default):");
+        this.resultPath = scanner.nextLine();
         System.out.println("Enter midi track to read:");
         this.track = scanner.nextInt();
         System.out.println("Enter length of note sequences");
