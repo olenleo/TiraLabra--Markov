@@ -5,14 +5,19 @@ import java.util.Arrays;
 public class MarkovGenerator {
 
     private double num;
-    private final RandomNumberGenerator rng = new RandomNumberGenerator();
+    private final RNG rng;
     private final int division;
     private double[] odds;
     private double sumOfOdds;
 
     public MarkovGenerator(int division) {
         this.division = division;
+        this.rng = new RandomNumberGenerator();
+    }
 
+    public MarkovGenerator(int division, RNG rng) {
+        this.division = division;
+        this.rng = rng;
     }
 
     /**
@@ -65,6 +70,7 @@ public class MarkovGenerator {
 
     /**
      * Asettaa jokaisen nuotin esiintymisfrekvenssin aputaulukkoon.
+     *
      * @param root Tutkittava TrieNode
      */
     private void createTableOfOdds(TrieNode root) {
@@ -76,6 +82,7 @@ public class MarkovGenerator {
             }
         }
     }
+
     /**
      * Jokainen esiintymisfrekvenssi jaetaan frekvenssien summalla.
      */

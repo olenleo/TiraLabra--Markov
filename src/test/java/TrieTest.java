@@ -26,7 +26,7 @@ public class TrieTest {
     private static NoteReader notereader;
 
     /**
-     * HUOM! Tässä testataan vanhentunutta toteutusta. Korjattava ensi tilassa.
+     * HUOM! Tässä testataan vain trien perustoiminnallisuutta. Nämä nuotit eivät vastaa itse sovelluksen toteutusta.
      *
      * @throws IOException
      */

@@ -58,7 +58,25 @@
                     </archive>
                 </configuration>
             </plugin>
-            
+            <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.3</version>
+            <executions>
+                <execution>
+                    <id>default-prepare-agent</id>
+                    <goals>
+                        <goal>prepare-agent</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <excludes>
+                    <exclude>musicgenerator/kayttoliittyma/*</exclude>
+                    <exclude>musicgenerator/sovelluslogiikka/Markovketju.*</exclude>
+                </excludes>
+            </configuration>
+        </plugin>
         </plugins>
     </build>
     <dependencies>

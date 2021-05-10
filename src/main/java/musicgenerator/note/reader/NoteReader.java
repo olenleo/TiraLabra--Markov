@@ -147,10 +147,7 @@ public class NoteReader {
         int absoluteTime = Integer.valueOf(record[1].trim());
         if (noteOperationIsStart(record)) {
             this.firstNoteOffset = absoluteTime;
-            System.out.println("First note offset: " + this.firstNoteOffset);
-
         }
-
     }
 
     /**

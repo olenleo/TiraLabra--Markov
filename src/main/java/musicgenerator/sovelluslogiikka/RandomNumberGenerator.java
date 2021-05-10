@@ -1,11 +1,12 @@
 package musicgenerator.sovelluslogiikka;
 
 /**
- * Luokka arpoo satunnaisia liukulukuja (Käsittääkseni linear congruential generator).
+ * Luokka arpoo satunnaisia liukulukuja (Käsittääkseni linear congruential
+ * generator).
  *
  * @author Leo Niemi
  */
-public class RandomNumberGenerator {
+public class RandomNumberGenerator implements RNG {
 
     private int max;
     private double last;
@@ -17,7 +18,7 @@ public class RandomNumberGenerator {
 
     /**
      * Kiinnostava artikkeli aiheesta: https://arxiv.org/pdf/2001.05304.pdf.
-     * 
+     *
      * @return Liukuluku välillä 0-1 kolmen desimaalin tarkkuudella.
      */
     public double nextDouble() {
@@ -25,4 +26,5 @@ public class RandomNumberGenerator {
         return (last % max) / 1000;
 
     }
+
 }
