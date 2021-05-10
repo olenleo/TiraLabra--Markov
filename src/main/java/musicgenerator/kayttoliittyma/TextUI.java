@@ -36,28 +36,39 @@ public class TextUI {
      */
     public void start() {
         scanner = new Scanner(System.in);
-        readUserInstructions();
-        trie = new Trie(len);
-        data = new String[amount][len];
-        root = trie.getRoot();
-        try {
-            NoteReader notereader = new NoteReader(filename, trie, len, track);
-            notereader.read();
-            markovGenerator = new MarkovGenerator(notereader.getDivision());
-            String[] freqArray = new String[len];
+        System.out.println("\t \t Java Music Generation");
+        System.out.println("\n\n");
+        while (true) {
+            System.out.println("******");
+            readUserInstructions();
+            trie = new Trie(len);
+            data = new String[amount][len];
+            root = trie.getRoot();
+            try {
+                NoteReader notereader = new NoteReader(filename, trie, len, track);
+                notereader.read();
+                markovGenerator = new MarkovGenerator(notereader.getDivision());
+                String[] freqArray = new String[len];
 
-            for (int i = 0; i < len; i++) {
-                for (int j = 0; j < amount; j++) {
-                    String[] s = markovGenerator.generateSequence(root, freqArray, 0);
-                    data[j][i] = s[i];
+                for (int i = 0; i < len; i++) {
+                    for (int j = 0; j < amount; j++) {
+                        String[] s = markovGenerator.generateSequence(root, freqArray, 0);
+                        data[j][i] = s[i];
+                    }
                 }
+                formatter = new SonicPiFormat(data, resultFilename, resultPath);
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(TextUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-            formatter = new SonicPiFormat(data, resultFilename, resultPath);
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(TextUI.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Generate another? Enter [Y] to continue, any other key to exit");
+             
+            if (!scanner.nextLine().equals("Y")) {
+                break;
+            }
         }
+
     }
 
     /**
@@ -73,14 +84,11 @@ public class TextUI {
         System.out.println("Enter result path (blank for default):");
         this.resultPath = scanner.nextLine();
         System.out.println("Enter midi track to read:");
-        this.track = scanner.nextInt();
+        this.track = Integer.valueOf(scanner.nextLine());
         System.out.println("Enter length of note sequences");
-        this.len = scanner.nextInt();
+        this.len = Integer.valueOf(scanner.nextLine());
         System.out.println("Enter amount of note sequences");
-        this.amount = scanner.nextInt();
-
-        System.out.println("result file name " + resultFilename);
-
+        this.amount = Integer.valueOf(scanner.nextLine());
     }
 
     public int getLen() {
