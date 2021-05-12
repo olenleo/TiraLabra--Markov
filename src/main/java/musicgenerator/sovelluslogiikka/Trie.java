@@ -1,7 +1,5 @@
 package musicgenerator.sovelluslogiikka;
 
-import java.util.Arrays;
-
 /**
  * Luokka luo Trie-tietorakneteen joka tallentaa nuottisarjoja periaattella 1)
  * taulukon indeksi on nuotin korkeus ja 2) taulukon sisältö on kyseisen nuotin
@@ -14,22 +12,18 @@ public class Trie {
     private TrieNode root;
     private int division = 480; // Melko turvallinen luku oletusarvoksi
 
+    /**
+     * Konstruktorissa luodaan trien juuri.
+     *
+     * @param len haluttu nuottisarjojen pituus
+     */
     public Trie(int len) {
         root = new TrieNode(0, len, null);
     }
 
     /**
-     * Asetetaan midi-tiedostosta luettu division-arvo.
-     *
-     * @param division Neljäsosanuottia vastaava aikayksiköiden lukumäärä.
-     */
-    public void setDivision(int division) {
-        this.division = division;
-    }
-
-    /**
      * Metodi lisää nuottisarjan trieen tallentaen jokaisen nuotin
-     * esiintymisfrekvenssin taulukkoon,
+     * esiintymisfrekvenssin taulukkoon.
      *
      * @param arrayOfNotes Taulukollinen nuotteja
      */
@@ -56,13 +50,20 @@ public class Trie {
      * Tällä hetkellä tarpeeton hakumetodi.
      *
      * @param prefix kokonaisen nuottisarjan osamäärä.
-     * @return
+     * @return Kyseinen nuottisarja löytyy triestä.
      */
     public boolean startsWith(int[] prefix) {
         TrieNode node = searchNode(prefix);
         return node != null;
     }
 
+    /**
+     * Tällä hetkellä tarpeeton hakumetodi.
+     *
+     * @param word Nuottisarja
+     * @return Kyseinen nuottisarja löytyy triestä, ja sen päättävä nuotti on
+     * lehti.
+     */
     public boolean search(int[] word) {
         TrieNode node = searchNode(word);
         if (node == null) {
@@ -76,10 +77,10 @@ public class Trie {
     }
 
     /**
-     * Tällä hetkellä tarpeeton hakumetodi etsii osajonoja triestä.
+     * Tällä hetkellä tarpeeton hakumetodi etsii TrieNoden.
      *
-     * @param s Osajono
-     * @return
+     * @param s
+     * @return TrieNode on
      */
     public TrieNode searchNode(int[] s) {
         TrieNode node = root;
@@ -99,5 +100,14 @@ public class Trie {
 
     public TrieNode getRoot() {
         return root;
+    }
+
+    /**
+     * Asetetaan midi-tiedostosta luettu division-arvo.
+     *
+     * @param division Neljäsosanuottia vastaava aikayksiköiden lukumäärä.
+     */
+    public void setDivision(int division) {
+        this.division = division;
     }
 }

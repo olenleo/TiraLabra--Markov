@@ -22,26 +22,16 @@ import musicgenerator.sovelluslogiikka.Trie;
 public class NoteReader {
 
     private final int[] noteStartTimes = new int[127];
-    private final String filename;
-    private final Trie trie;
-    private final int len;
     private int track;
     private int division;
     private int firstNoteOffset;
     private int lastSeenNoteStart;
     private int lastSeenNoteEnd;
+    private final int len;
+    private final String filename;
+    private final Trie trie;
     private ArrayDeque<Note> noteStack;
     private boolean offsetHasBeenSet;
-
-    /**
-     * Midi-tiedoston otsakkeen division-arvo vastaa aikayksikköjen lukumäärää
-     * yhtä neljäsosanuottia kohti. Tätä tarvitaan temmon käsittelyssä.
-     *
-     * @return Aikayksikköjen lukumäärä jokaista neljäsosanuottia kohti.
-     */
-    public int getDivision() {
-        return this.division;
-    }
 
     /**
      * Luokka hallinnoi formatoidun csv-tiedoston sisältämän MIDI-informaation
@@ -99,7 +89,7 @@ public class NoteReader {
 
                 }
             }
-            System.out.println("****************************\n\nFile read succesfully\n\n****************************");
+//            System.out.println("****************************\n\nFile read succesfully\n\n****************************");
         } catch (IOException ex) {
             Logger.getLogger(NoteReader.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -193,5 +183,15 @@ public class NoteReader {
             trie.insert(array);
             noteStack.removeFirst();
         }
+    }
+
+    /**
+     * Midi-tiedoston otsakkeen division-arvo vastaa aikayksikköjen lukumäärää
+     * yhtä neljäsosanuottia kohti. Tätä tarvitaan temmon käsittelyssä.
+     *
+     * @return Aikayksikköjen lukumäärä jokaista neljäsosanuottia kohti.
+     */
+    public int getDivision() {
+        return this.division;
     }
 }

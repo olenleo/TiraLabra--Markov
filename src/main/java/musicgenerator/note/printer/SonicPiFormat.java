@@ -18,9 +18,11 @@ public class SonicPiFormat {
     private String[][] data;
     private final String path;
     private File file;
+    private String filename;
 
     public SonicPiFormat(String[][] data, String filename, String path) {
         this.data = data;
+        this.filename = filename;
         if (path.isEmpty()) {
             this.path = "C:\\Users\\35850\\Documents\\SONIC PI\\Code\\" + filename + ".rb";
         } else {
@@ -54,17 +56,18 @@ public class SonicPiFormat {
     }
 
     /**
-     * Kovakoodattu toimiva aloituspiste Sonic Pi:tä varten.
+     * Kovakoodattu toimiva aloituspiste Sonic Pi:tä varten. live_loop saa nimekseen tiedostonimen useamman loopin samanaikaisen käytön yksinkertaistamiseksi.
      *
      * @throws IOException
      */
     public void writeBody() throws IOException {
-        String body = "\nuse_bpm 100\n"
+        // String string = String.format("boid %s", aVariable);
+        String body = String.format("\nuse_bpm 100\n"
                 + "\n"
                 + "rows = notes.length - 1\n"
                 + "len = notes[0].length - 1\n"
                 + "\n"
-                + "live_loop :test do\n"
+                + "live_loop :%s do\n"
                 + "  use_synth :dtri\n"
                 + "  row_select = rrand_i(0, rows)\n"
                 + "  row = notes[row_select]\n"
@@ -78,7 +81,7 @@ public class SonicPiFormat {
                 + "    play pitch, attack: 0, sustain: sustain, release: 0.02 ,amp: 1\n"
                 + "    sleep rest\n"
                 + "    i += 1\n"
-                + "  end\nend";
+                + "  end\nend", filename);
         try ( BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
             writer.append(body);
         }
