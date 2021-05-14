@@ -11,9 +11,11 @@ public class Main {
         ui.start();
 
 //        EfficiencyTester ef = new EfficiencyTester();
-//        for (int i = 0; i < 100; i++) {
-//            System.out.println("i: " + i);
+//        System.out.println("Trie lengths");
+//        System.out.println("\t10\t|\t50\t|\t100\t|\t");
+//        for (int i = 0; i < 20; i++) {
 //            ef.run();
 //        }
     }
+
 }

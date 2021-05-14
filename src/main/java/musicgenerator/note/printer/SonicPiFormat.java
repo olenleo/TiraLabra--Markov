@@ -56,7 +56,9 @@ public class SonicPiFormat {
     }
 
     /**
-     * Kovakoodattu toimiva aloituspiste Sonic Pi:tä varten. live_loop saa nimekseen tiedostonimen useamman loopin samanaikaisen käytön yksinkertaistamiseksi.
+     * Kovakoodattu toimiva aloituspiste Sonic Pi:tä varten. live_loop saa
+     * nimekseen tiedostonimen useamman loopin samanaikaisen käytön
+     * yksinkertaistamiseksi.
      *
      * @throws IOException
      */
@@ -78,6 +80,12 @@ public class SonicPiFormat {
                 + "    pitch = note_object[0]\n"
                 + "    sustain = note_object[1]\n"
                 + "    rest = note_object[2]\n"
+                + " if sustain < 0\n"
+                + "      sustain = 2\n"
+                + "    end\n"
+                + "    if rest < 0\n"
+                + "      rest = 2\n"
+                + "    end\n"
                 + "    play pitch, attack: 0, sustain: sustain, release: 0.02 ,amp: 1\n"
                 + "    sleep rest\n"
                 + "    i += 1\n"

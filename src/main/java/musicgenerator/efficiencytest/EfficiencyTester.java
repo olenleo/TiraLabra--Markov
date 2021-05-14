@@ -13,12 +13,12 @@ import musicgenerator.sovelluslogiikka.Trie;
  */
 public class EfficiencyTester {
 
-    Trie trieWithLengthOf10 = new Trie(10);
-    Trie trieWithLengthOf50 = new Trie(50);
-    Trie trieWithLengthOf100 = new Trie(100);
+    Trie trieWithLengthOf10;
+    Trie trieWithLengthOf50;
+    Trie trieWithLengthOf100;
     MarkovGenerator generator;
-    private final int n = 100;
-    private long[] times = new long[100];
+    private final int n = 1000000;
+    private long[] times = new long[n];
     private long t;
 
     public EfficiencyTester() {
@@ -28,37 +28,40 @@ public class EfficiencyTester {
     public void run() {
         try {
             testTrieWithLength10();
-            times = new long[100];
             testTrieWithLength50();
-            times = new long[100];
             testTrieWithLength100();
-            times = new long[100];
             System.out.println("");
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     public void testTrieWithLength10() throws URISyntaxException, IOException {
-
+        trieWithLengthOf10 = new Trie(10);
+        times = new long[n];
         NoteReader reader = new NoteReader("cello_suite_1007", trieWithLengthOf10, 10, 2);
         reader.read();
         for (int i = 0; i < n; i++) {
+
             t = System.nanoTime();
-            generator.generateSequence(trieWithLengthOf10.getRoot(), new String[100], 0);
+            generator.generateSequence(trieWithLengthOf10.getRoot(), new String[10], 0);
             t = System.nanoTime() - t;
             times[i] = t;
         }
-        System.out.print("\t" + getAverage(times));
+        System.out.print(getAverage(times));
 
     }
 
     public void testTrieWithLength50() throws URISyntaxException, IOException {
-        NoteReader reader = new NoteReader("cello_suite_1007", trieWithLengthOf10, 50, 2);
+        trieWithLengthOf50 = new Trie(50);
+        times = new long[n];
+
+        NoteReader reader = new NoteReader("cello_suite_1007", trieWithLengthOf50, 50, 2);
         reader.read();
         for (int i = 0; i < n; i++) {
             t = System.nanoTime();
-            generator.generateSequence(trieWithLengthOf10.getRoot(), new String[100], 0);
+            generator.generateSequence(trieWithLengthOf50.getRoot(), new String[50], 0);
             t = System.nanoTime() - t;
             times[i] = t;
         }
@@ -67,11 +70,13 @@ public class EfficiencyTester {
     }
 
     public void testTrieWithLength100() throws URISyntaxException, IOException {
-        NoteReader reader = new NoteReader("cello_suite_1007", trieWithLengthOf10, 100, 2);
+        times = new long[n];
+        trieWithLengthOf100 = new Trie(100);
+        NoteReader reader = new NoteReader("cello_suite_1007", trieWithLengthOf100, 100, 2);
         reader.read();
         for (int i = 0; i < n; i++) {
             t = System.nanoTime();
-            generator.generateSequence(trieWithLengthOf10.getRoot(), new String[100], 0);
+            generator.generateSequence(trieWithLengthOf100.getRoot(), new String[100], 0);
             t = System.nanoTime() - t;
             times[i] = t;
         }
