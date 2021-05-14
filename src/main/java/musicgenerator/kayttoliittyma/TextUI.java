@@ -36,8 +36,8 @@ public class TextUI {
      */
     public void start() {
         scanner = new Scanner(System.in);
-        System.out.println("\t \t Java Music Generation");
-        System.out.println("\n\n");
+        System.out.println("\n\t \t Java Music Generation\n");
+        
         while (true) {
             System.out.println("******");
             readUserInstructions();
