@@ -1,5 +1,11 @@
 # Testausdokumentti
 
+## jUnit-yksikkötestaus
+
+Automaattiset yksikkötestit testaavat Trien toiminnallisuutta, nuottien lukua ja markov-ketjutoiminnallisuutta. Testit voisivat kieltämättä olla laajempia (esimerkiksi nuottien kesto ei koskaan saisi olla negatiivinen) mutta nämä kattavat perustoiminnallisuuden. Olen lisäksi tehnyt paljon manuaalista testaamista.
+
+
+## Tehokkuus
 Tehokkuutta mittaava luokka luo 10, 50 ja 100 solmun mittaisia trie-rakenteita. Alla ajat (ms) miljoonan nuottisarjan generointiin kussakin.
 
 Trie lengths
