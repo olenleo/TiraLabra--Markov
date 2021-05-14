@@ -10,6 +10,11 @@ Tällä hetkellä lopputulos tallentuu [Sonic Pi](https://sonic-pi.net/)-synteti
 
 Sovellus avaa komentorivipohjaisen käyttöliittymän. Lopputuloksena saatava ruby-tiedosto on suoraan ajettavissa Sonic Pi:n avulla. 
 
+Käynnistys: <code>$  java -jar musicGenerator.jar </code>
+
+Repositoriossa löytyvät .csv-tiedostot lueteltuina [resources-kansiossa](https://github.com/olenleo/TiraLabra--Markov/tree/main/src/main/resources)
+
+
 Checkstyle: <code>$ mvn jxr:jxr checkstyle:checkstyle</code>
 
 Testiraportti: <code>$ mvn test jacoco:report</code>
@@ -29,3 +34,5 @@ Repositorio sisältää .csv-tiedostoja testausta varten. Omien tiedostojen impo
 [Viikko 6](https://github.com/olenleo/TiraLabra--Markov/blob/main/documentation/Viikkoraportti6.md)
 
 [Testaus](https://github.com/olenleo/TiraLabra--Markov/blob/main/documentation/Testaus.md)
+
+[Toteutus](https://github.com/olenleo/TiraLabra--Markov/blob/main/documentation/Toteutus.md)
