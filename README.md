@@ -17,7 +17,9 @@ Testiraportti: <code>$ mvn test jacoco:report</code>
 ## Vaatimukset
 Repositorio sisältää .csv-tiedostoja testausta varten. Omien tiedostojen importtaminen vaatii ulkoisen [MidiCSV](https://www.fourmilab.ch/webtools/midicsv/)-työkalun asennuksen. Musiikin toisto puolestaan edellyttää [Sonic Pi:n](https://sonic-pi.net/) asentamisen.
 
-# Viikkoraportit:
+
+
+# Viikkoraportit ja muu dokumentaatio:
 
 [Viikko 1](https://github.com/olenleo/TiraLabra--Markov/blob/main/documentation/MAARITTELY.md)
 [Viikko 2](https://github.com/olenleo/TiraLabra--Markov/blob/main/documentation/Viikkoraportti2.md)
@@ -25,3 +27,5 @@ Repositorio sisältää .csv-tiedostoja testausta varten. Omien tiedostojen impo
 [Viikko 4](https://github.com/olenleo/TiraLabra--Markov/blob/main/documentation/Viikkoraportti4.md)
 [Viikko 5](https://github.com/olenleo/TiraLabra--Markov/blob/main/documentation/Viikkoraportti5.md)
 [Viikko 6](https://github.com/olenleo/TiraLabra--Markov/blob/main/documentation/Viikkoraportti6.md)
+
+[Testaus](https://github.com/olenleo/TiraLabra--Markov/blob/main/documentation/Testaus.md)
