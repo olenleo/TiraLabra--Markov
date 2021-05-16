@@ -81,7 +81,7 @@ public class TextUI {
         this.filename = scanner.nextLine();
         System.out.println("Enter filename for end result: ");
         this.resultFilename = scanner.nextLine();
-        System.out.println("Enter result path (blank for default):");
+        System.out.println("Enter result path (blank for /user/generatedMusic/):");
         this.resultPath = scanner.nextLine();
         System.out.println("Enter midi track to read:");
         this.track = Integer.valueOf(scanner.nextLine());

@@ -24,9 +24,10 @@ public class SonicPiFormat {
         this.data = data;
         this.filename = filename;
         if (path.isEmpty()) {
-            this.path = System.getProperty("user.home") + "\\generatedMusic\\" + filename + ".rb";
+            
+            this.path = System.getProperty("user.home") + "/generatedMusic/" + filename + ".rb";
         } else {
-            this.path = path + "\\ " + filename + ".rb";
+            this.path = path + "/" + filename + ".rb";
         }
         try {
             createFile(this.path);
