@@ -22,7 +22,10 @@ Testiraportti: <code>$ mvn test jacoco:report</code>
 ## Vaatimukset
 Repositorio sisältää .csv-tiedostoja testausta varten. Omien tiedostojen importtaminen vaatii ulkoisen [MidiCSV](https://www.fourmilab.ch/webtools/midicsv/)-työkalun asennuksen. Musiikin toisto puolestaan edellyttää [Sonic Pi:n](https://sonic-pi.net/) asentamisen.
 
-
+## Requirements
+- Install openjdk:11
+- Run ``` $ java -jar musicgenerator.jar ```
+- The docker image has issues with the default target folder: I suggest using ```/generatedMusic/```
 
 # Viikkoraportit ja muu dokumentaatio:
 
